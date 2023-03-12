@@ -181,6 +181,10 @@
               "target": "Package",
               "version": "[11.1.0, )"
             },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Nethereum.Autogen.ContractApi": {
               "target": "Package",
               "version": "[4.11.0, )"

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.Proposal;
 using QDAO.Application.Services;
+using QDAO.Domain;
 using QDAO.Endpoint.DTOs;
-using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -34,6 +34,19 @@ namespace QDAO.Endpoint.Controllers
 
             return Ok(((long)response.ProposalsCount));
         }
+
+
+        [HttpGet("{proposalId::long}")]
+        public async Task<ActionResult<Proposal>> GetProposalById(
+            [FromRoute] long proposalId,
+            CancellationToken ct)
+        {
+            var query = new GetProposalByIdQuery.Request(proposalId);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response.Proposal);
+        }
+
 
 
         [HttpPost("create")]

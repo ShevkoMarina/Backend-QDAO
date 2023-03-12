@@ -1,5 +1,6 @@
 ﻿using Nethereum.RPC.Eth.DTOs;
 using QDAO.Domain;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace QDAO.Application.Services
@@ -18,6 +19,14 @@ namespace QDAO.Application.Services
         public async Task<string> Execute(string transaction)
         {
             var txHash = await _web3Client.Eth.Transactions.SendRawTransaction.SendRequestAsync(transaction);
+
+            // Получаем результат выполнения
+            var receipt = await _web3Client.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(txHash);
+            while (receipt == null)
+            {
+                Thread.Sleep(1000);
+                receipt = await _web3Client.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(txHash);
+            }
 
             return txHash;
         }

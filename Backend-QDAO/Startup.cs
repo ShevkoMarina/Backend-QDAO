@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using QDAO.Application;
 using QDAO.Application.Services;
 using QDAO.Application.Handlers.Proposal;
+using QDAO.Application.GrpcClients;
 
 namespace QDAO.Endpoint
 {
@@ -23,6 +24,11 @@ namespace QDAO.Endpoint
             services.AddSwaggerGen();
 
             services.AddScoped<TransactionService>();
+            services.AddScoped<ContractsManager>();
+
+
+            services.AddScoped<ProposalGrpcClient>();
+            services.AddScoped<AdminGrpcClient>();
 
             services.AddMediatR(typeof(CreateProposalTxQuery.Handler));
         

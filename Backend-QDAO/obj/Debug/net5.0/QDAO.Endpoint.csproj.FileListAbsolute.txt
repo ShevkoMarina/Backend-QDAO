@@ -42,3 +42,9 @@ C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\obj\Debug\net5.0\QDAO.En
 C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\obj\Debug\net5.0\QDAO.Endpoint.genruntimeconfig.cache
 C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\QDAO.Domain.dll
 C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\QDAO.Domain.pdb
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\obj\Debug\net5.0\QDAO.Endpoint.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll

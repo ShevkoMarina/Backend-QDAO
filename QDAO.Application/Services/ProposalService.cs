@@ -8,5 +8,6 @@ namespace QDAO.Application.Services
 {
     class ProposalService
     {
+       
     }
 }
