@@ -41,9 +41,9 @@ namespace QDAO.Application.Handlers.Proposal
                 var txMessage = new CreateProposalTransaction
                 {
                     Description = request.Description,
-                    CalldatasForTx = new List<byte[]>(),
-                    Values = new List<BigInteger>(),
-                    Targets = new List<string>()
+                    CalldatasForTx = callDatas,
+                    Values = new List<BigInteger>() { 0 },
+                    Targets = new List<string>() { "0x2980343ce6E94aA17c5499139AB3532D98095321" }
 
                 };
 

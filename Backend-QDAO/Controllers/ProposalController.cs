@@ -74,9 +74,10 @@ namespace QDAO.Endpoint.Controllers
         }
 
         [HttpPost("execute-transaction")]
-        public async Task ExecuteTransaction([FromBody] string transaction)
+        public async Task<ActionResult<string>> ExecuteTransaction([FromBody] string transaction)
         {
-            await _transactionService.Execute(transaction);
+            var txHash = await _transactionService.Execute(transaction);
+            return Ok(txHash);
         }
     }
 }

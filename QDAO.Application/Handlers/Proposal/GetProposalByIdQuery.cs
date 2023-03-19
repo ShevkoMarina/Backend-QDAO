@@ -30,17 +30,18 @@ namespace QDAO.Application.Handlers.Proposal
                 var proposalInfo = await _proposalGrpcClient.GetProposalById(request.ProposalId);
 
                 // дообогащаем через базу
-
+                /*
                 var proposal = new Domain.Proposal
                 {
                     Proposer = proposalInfo.Proposer,
                     Id = (uint)proposalInfo.Id,
                     StartBlock = (uint)proposalInfo.StartBlock,
                     EndBlock = (uint)proposalInfo.EndBlock,
-                    Name = "Предложение 1",
-                    Description = "JGJGJFJFJJFJF"
+                    Name = "test",
+                    Description = "test"
                 };
-
+                */
+                var proposal = new Domain.Proposal();
 
                 return new Response(proposal);
             }

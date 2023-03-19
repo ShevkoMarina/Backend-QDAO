@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="11.1.0" />
-    <PackageReference Include="Nethereum.Fx" Version="4.12.0" />
+    <PackageReference Include="Nethereum.Fx" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

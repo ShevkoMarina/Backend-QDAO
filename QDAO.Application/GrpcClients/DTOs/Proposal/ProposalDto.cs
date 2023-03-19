@@ -12,38 +12,37 @@ namespace QDAO.Application.GrpcClients.DTOs
     public class ProposalDto : IFunctionOutputDTO
     {
         [Parameter("uint256", "id", 1)]
-        public virtual BigInteger Id { get; set; }
-
+        public  BigInteger Id { get; set; }
 
         [Parameter("address", "proposer", 2)]
-        public virtual string Proposer { get; set; }
-
+        public string Proposer { get; set; }
 
         [Parameter("uint256", "eta", 3)]
-        public virtual BigInteger Eta { get; set; }
+        public  BigInteger Eta { get; set; }
 
+        [Parameter("address[]", "targets", 4)]
+        public List<string> Targets { get; set; }
 
-        [Parameter("uint256", "startBlock", 4)]
-        public virtual BigInteger StartBlock { get; set; }
+        [Parameter("uint256[]", "values", 5)]
+        public  List<BigInteger> Values { get; set; }
+      //  [Parameter("bytes[]", "calldatas", 6)]
+     //   public  List<byte[]> Calldatas { get; set; }
 
+        [Parameter("uint256", "startBlock", 7)]
+        public  BigInteger StartBlock { get; set; }
 
-        [Parameter("uint256", "endBlock", 5)]
-        public virtual BigInteger EndBlock { get; set; }
+        [Parameter("uint256", "endBlock", 8)]
+        public  BigInteger EndBlock { get; set; }
+        [Parameter("uint256", "forVotes", 9)]
+       public  BigInteger ForVotes { get; set; }
 
+        [Parameter("uint256", "againstVotes", 10)]
+        public  BigInteger AgainstVotes { get; set; }
 
-        [Parameter("uint256", "forVotes", 6)]
-        public virtual BigInteger ForVotes { get; set; }
+        [Parameter("bool", "canceled", 11)]
+        public  bool Canceled { get; set; }
 
-
-        [Parameter("uint256", "againstVotes", 7)]
-        public virtual BigInteger AgainstVotes { get; set; }
-
-
-        [Parameter("bool", "canceled", 8)]
-        public virtual bool Canceled { get; set; }
-
-
-        [Parameter("bool", "executed", 9)]
-        public virtual bool Executed { get; set; }
+        [Parameter("bool", "executed", 12)]
+        public  bool Executed { get; set; }
     }
 }

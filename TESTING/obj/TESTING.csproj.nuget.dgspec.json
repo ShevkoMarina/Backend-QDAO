@@ -46,7 +46,7 @@
             },
             "Nethereum.Fx": {
               "target": "Package",
-              "version": "[4.12.0, )"
+              "version": "[4.7.0, )"
             }
           },
           "imports": [
