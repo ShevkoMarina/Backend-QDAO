@@ -47,6 +47,10 @@
             "Nethereum.Fx": {
               "target": "Package",
               "version": "[4.7.0, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[7.0.2, )"
             }
           },
           "imports": [

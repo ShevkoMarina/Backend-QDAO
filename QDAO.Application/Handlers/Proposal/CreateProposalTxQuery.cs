@@ -44,7 +44,7 @@ namespace QDAO.Application.Handlers.Proposal
                     CalldatasForTx = callDatas,
                     Values = new List<BigInteger>() { 0 },
                     Targets = new List<string>() { "0x2980343ce6E94aA17c5499139AB3532D98095321" }
-
+                    695847
                 };
 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());

@@ -26,3 +26,5 @@ C:\Users\User\Desktop\Diploma\Backend-QDAO\TESTING\bin\Debug\net5.0\Nethereum.Fx
 C:\Users\User\Desktop\Diploma\Backend-QDAO\TESTING\bin\Debug\net5.0\System.Reactive.dll
 C:\Users\User\Desktop\Diploma\Backend-QDAO\TESTING\bin\Debug\net5.0\System.Runtime.InteropServices.WindowsRuntime.dll
 C:\Users\User\Desktop\Diploma\Backend-QDAO\TESTING\obj\Debug\net5.0\TESTING.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\Diploma\Backend-QDAO\TESTING\bin\Debug\net5.0\Npgsql.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\TESTING\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
