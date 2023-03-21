@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\QDAO.Domain.csproj" />
+    <ProjectReference Include="..\QDAO.Persistence\QDAO.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

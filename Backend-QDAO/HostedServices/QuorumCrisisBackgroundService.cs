@@ -9,9 +9,20 @@ namespace QDAO.Endpoint.HostedServices
 {
     public class QuorumCrisisBackgroundService : BackgroundService
     {
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            throw new NotImplementedException();
+            await Task.Yield();
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
         }
     }
 }

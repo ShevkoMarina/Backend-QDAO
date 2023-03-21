@@ -336,6 +336,17 @@
           "lib/netstandard1.0/Common.Logging.Core.dll": {}
         }
       },
+      "Dapper/2.0.123": {
+        "runtime": {
+          "lib/net5.0/Dapper.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.123.33578"
+          }
+        },
+        "compile": {
+          "lib/net5.0/Dapper.dll": {}
+        }
+      },
       "MediatR/11.1.0": {
         "dependencies": {
           "MediatR.Contracts": "1.0.1"
@@ -861,7 +872,8 @@
           "Microsoft.Extensions.Hosting.Abstractions": "7.0.0",
           "Nethereum.Autogen.ContractApi": "4.11.0",
           "Nethereum.Fx": "4.12.0",
-          "QDAO.Domain": "1.0.0"
+          "QDAO.Domain": "1.0.0",
+          "QDAO.Persistence": "1.0.0"
         },
         "runtime": {
           "QDAO.Application.dll": {}
@@ -876,6 +888,17 @@
         },
         "compile": {
           "QDAO.Domain.dll": {}
+        }
+      },
+      "QDAO.Persistence/1.0.0": {
+        "dependencies": {
+          "Dapper": "2.0.123"
+        },
+        "runtime": {
+          "QDAO.Persistence.dll": {}
+        },
+        "compile": {
+          "QDAO.Persistence.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
@@ -2549,6 +2572,13 @@
       "path": "common.logging.core/3.4.1",
       "hashPath": "common.logging.core.3.4.1.nupkg.sha512"
     },
+    "Dapper/2.0.123": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RDFF4rBLLmbpi6pwkY7q/M6UXHRJEOerplDGE5jwEkP/JGJnBauAClYavNKJPW1yOTWRPIyfj4is3EaJxQXILQ==",
+      "path": "dapper/2.0.123",
+      "hashPath": "dapper.2.0.123.nupkg.sha512"
+    },
     "MediatR/11.1.0": {
       "type": "package",
       "serviceable": true,
@@ -2926,6 +2956,11 @@
       "sha512": ""
     },
     "QDAO.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "QDAO.Persistence/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

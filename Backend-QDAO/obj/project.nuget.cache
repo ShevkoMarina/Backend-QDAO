@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "rnTlF5EZ7WKtvwrwcrHG8qShQICscfEMQ2tyqAmyesAIt5AqN/SIl70fWkxhQhmsuROAsslvLWrB/PifgC2Lwg==",
+  "dgSpecHash": "2x9kzOQxc+AE0w3D0eq0OQ1Vf2WiRUlP/NwKGMp3bz0Krbc+pshNM/j1PmXzvOMq3cGoxry+ZFG92NhNiD3QkA==",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\Desktop\\Diploma\\Backend-QDAO\\Backend-QDAO\\QDAO.Endpoint.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\common.logging.core\\3.4.1\\common.logging.core.3.4.1.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\mediatr\\11.1.0\\mediatr.11.1.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\11.0.0\\mediatr.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

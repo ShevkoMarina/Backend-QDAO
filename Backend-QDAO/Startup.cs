@@ -12,6 +12,9 @@ using QDAO.Application;
 using QDAO.Application.Services;
 using QDAO.Application.Handlers.Proposal;
 using QDAO.Application.GrpcClients;
+using QDAO.Endpoint.HostedServices;
+using QDAO.Persistence.Repositories.ProposalQuorum;
+using QDAO.Persistence;
 
 namespace QDAO.Endpoint
 {
@@ -30,6 +33,12 @@ namespace QDAO.Endpoint
             services.AddScoped<ProposalGrpcClient>();
             services.AddScoped<AdminGrpcClient>();
 
+           // services.AddHostedService<QuorumCrisisBackgroundService>();
+
+            services.AddScoped<ProposalQrisisQueueRepository>();
+            services.AddSingleton<IDapperExecutor, DapperExecutor>();
+
+          
             services.AddMediatR(typeof(CreateProposalTxQuery.Handler));
         
         }

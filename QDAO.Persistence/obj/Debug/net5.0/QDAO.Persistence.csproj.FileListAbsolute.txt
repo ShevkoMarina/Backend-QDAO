@@ -1,0 +1,12 @@
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\bin\Debug\net5.0\QDAO.Persistence.deps.json
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\bin\Debug\net5.0\QDAO.Persistence.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\bin\Debug\net5.0\ref\QDAO.Persistence.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\bin\Debug\net5.0\QDAO.Persistence.pdb
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\obj\Debug\net5.0\QDAO.Persistence.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\obj\Debug\net5.0\QDAO.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\obj\Debug\net5.0\QDAO.Persistence.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\obj\Debug\net5.0\QDAO.Persistence.AssemblyInfo.cs
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\obj\Debug\net5.0\QDAO.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\obj\Debug\net5.0\QDAO.Persistence.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\obj\Debug\net5.0\ref\QDAO.Persistence.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Persistence\obj\Debug\net5.0\QDAO.Persistence.pdb

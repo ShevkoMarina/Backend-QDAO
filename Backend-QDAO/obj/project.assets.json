@@ -14,6 +14,15 @@
           "lib/netstandard1.0/Common.Logging.Core.dll": {}
         }
       },
+      "Dapper/2.0.123": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Dapper.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Dapper.dll": {}
+        }
+      },
       "MediatR/11.1.0": {
         "type": "package",
         "dependencies": {
@@ -711,7 +720,8 @@
           "Microsoft.Extensions.Hosting.Abstractions": "7.0.0",
           "Nethereum.Autogen.ContractApi": "4.11.0",
           "Nethereum.Fx": "4.12.0",
-          "QDAO.Domain": "1.0.0"
+          "QDAO.Domain": "1.0.0",
+          "QDAO.Persistence": "1.0.0"
         },
         "compile": {
           "bin/placeholder/QDAO.Application.dll": {}
@@ -728,6 +738,19 @@
         },
         "runtime": {
           "bin/placeholder/QDAO.Domain.dll": {}
+        }
+      },
+      "QDAO.Persistence/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Dapper": "2.0.123"
+        },
+        "compile": {
+          "bin/placeholder/QDAO.Persistence.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/QDAO.Persistence.dll": {}
         }
       }
     }
@@ -751,6 +774,24 @@
         "lib/portable-win+net40+sl40+wp7+wpa81/Common.Logging.Core.XML",
         "lib/portable-win+net40+sl40+wp7+wpa81/Common.Logging.Core.dll",
         "lib/portable-win+net40+sl40+wp7+wpa81/Common.Logging.Core.pdb"
+      ]
+    },
+    "Dapper/2.0.123": {
+      "sha512": "RDFF4rBLLmbpi6pwkY7q/M6UXHRJEOerplDGE5jwEkP/JGJnBauAClYavNKJPW1yOTWRPIyfj4is3EaJxQXILQ==",
+      "type": "package",
+      "path": "dapper/2.0.123",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Dapper.png",
+        "dapper.2.0.123.nupkg.sha512",
+        "dapper.nuspec",
+        "lib/net461/Dapper.dll",
+        "lib/net461/Dapper.xml",
+        "lib/net5.0/Dapper.dll",
+        "lib/net5.0/Dapper.xml",
+        "lib/netstandard2.0/Dapper.dll",
+        "lib/netstandard2.0/Dapper.xml"
       ]
     },
     "MediatR/11.1.0": {
@@ -3233,6 +3274,11 @@
       "type": "project",
       "path": "../Domain/QDAO.Domain.csproj",
       "msbuildProject": "../Domain/QDAO.Domain.csproj"
+    },
+    "QDAO.Persistence/1.0.0": {
+      "type": "project",
+      "path": "../QDAO.Persistence/QDAO.Persistence.csproj",
+      "msbuildProject": "../QDAO.Persistence/QDAO.Persistence.csproj"
     }
   },
   "projectFileDependencyGroups": {

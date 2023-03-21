@@ -48,3 +48,6 @@ C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Microso
 C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Microsoft.Extensions.Hosting.Abstractions.dll
 C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Dapper.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\QDAO.Persistence.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\QDAO.Persistence.pdb

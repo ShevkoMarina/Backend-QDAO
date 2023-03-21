@@ -13,3 +13,5 @@ C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Application\obj\Debug\net5.0\QDA
 C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Application\bin\Debug\net5.0\QDAO.Domain.dll
 C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Application\bin\Debug\net5.0\QDAO.Domain.pdb
 C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Application\obj\Debug\net5.0\QDAO.Application.csproj.CopyComplete
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Application\bin\Debug\net5.0\QDAO.Persistence.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\QDAO.Application\bin\Debug\net5.0\QDAO.Persistence.pdb
