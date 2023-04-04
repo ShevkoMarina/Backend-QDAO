@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace QDAO.Persistence
     {
         Task<DbConnection> OpenConnectionAsync(CancellationToken ct);
 
-        Task<T> QuerySingleIrDefaultAsync<T>(string command, CancellationToken ct, object parameters = null);
-        Task<T> QueryAsync<T>(string command, CancellationToken ct, object parameters = null);
+        Task<T> QuerySingleOrDefaultAsync<T>(string command, CancellationToken ct, object parameters = null);
+        Task<IReadOnlyCollection<T>> QueryAsync<T>(string command, CancellationToken ct, object parameters = null);
     }
 }

@@ -25,9 +25,9 @@ namespace QDAO.Application.Handlers.Proposal
 
             public async Task<Response> Handle(Request request, CancellationToken ct)
             {
-                var web3 = new Web3("https://eth-goerli.g.alchemy.com/v2/PU1jr72jAHmucb_oUHObuiwoCCsdtODL");
+                var web3 = new Web3("HTTP://127.0.0.1:8545");
 
-                var contractAddress = "0x2980343ce6E94aA17c5499139AB3532D98095321"; // Governor 
+                var contractAddress = "0x25B9a573399CF9D1E50fcdE89aB8782271531CeE"; // delegator 
 
                 var message = new GetProposalsCountMessage();
 

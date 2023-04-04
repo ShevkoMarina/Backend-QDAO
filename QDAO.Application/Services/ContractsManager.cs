@@ -11,15 +11,16 @@ namespace QDAO.Application.Services
 {
     public class ContractsManager
     {
-        private Web3 web3;
+        public Web3 Web3 { get; set; }
 
         public ContractsManager()
         {
-            web3 = new Nethereum.Web3.Web3("https://eth-goerli.g.alchemy.com/v2/PU1jr72jAHmucb_oUHObuiwoCCsdtODL");
+            // web3 = new Nethereum.Web3.Web3("https://eth-goerli.g.alchemy.com/v2/PU1jr72jAHmucb_oUHObuiwoCCsdtODL");
+            Web3 = new Nethereum.Web3.Web3("http://127.0.0.1:8545");
         }
 
         // временно
-        private string _governorAddress = "0xebdf7907577Dbd00a0E55479e24B17AecA8384ed";
+        private string _governorAddress = "0x25B9a573399CF9D1E50fcdE89aB8782271531CeE";
 
         public string GetGovernorAddress()
         {
@@ -28,17 +29,12 @@ namespace QDAO.Application.Services
 
         public string GetTimelockAddress()
         {
-            return "0xB289545bBF4443b03CC44F8BaF65E86DAF9d90A9";
+            return "0x4e6Ea8622c1fc417d38BBE22D36Ed10848266843";
         }
 
         public string GetTokenAddress()
         {
-            return "0xc78EB1c2d7b19C087B5d00Ea9D980D4746e7Bc39";
-        }
-
-        public Web3 GetWeb3()
-        {
-            return web3;
+            return "0x21c50fE0A33AA7F45d714AD4CEd5f8904B0a53fA";
         }
 
         public Web3 GetWeb3FromAdminAccount()

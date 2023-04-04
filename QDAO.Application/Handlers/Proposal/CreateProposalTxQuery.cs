@@ -32,7 +32,7 @@ namespace QDAO.Application.Handlers.Proposal
             {
                 var updateVotingMessage = new UpdateVotingPeriodTransaction
                 {
-                    NewValue = 2
+                    NewValue = 5
                 };
 
                 var callDatas = new List<byte[]>();
@@ -40,10 +40,9 @@ namespace QDAO.Application.Handlers.Proposal
 
                 var txMessage = new CreateProposalTransaction
                 {
-                    Description = request.Description,
                     CalldatasForTx = callDatas,
                     Values = new List<BigInteger>() { 0 },
-                    Targets = new List<string>() { "0x2980343ce6E94aA17c5499139AB3532D98095321" }
+                    Targets = new List<string>() { "0x25B9a573399CF9D1E50fcdE89aB8782271531CeE" }
          
                 };
 
@@ -69,8 +68,6 @@ namespace QDAO.Application.Handlers.Proposal
             public virtual List<BigInteger> Values { get; set; } 
             [Parameter("bytes[]", "calldatas", 3)]
             public virtual List<byte[]> CalldatasForTx { get; set; }
-            [Parameter("string", "description", 4)]
-            public virtual string Description { get; set; }
         }
     }
 }

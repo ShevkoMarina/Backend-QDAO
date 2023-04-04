@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5GzovGHHiRsN05h+za16ykw9BXZQ6jTwBK3yNVacxkHZGZbe8WY/Vv+vvSgVjnkoCMDiA3FFmzgur6YmUBP5nA==",
+  "dgSpecHash": "R8nI34XC1WXEEh1QqzOa6Cq14YQSDim9TIekl0NuPv15VT31xL9kcsKUa0f4WDKdt9gmqA2QW2L2rM+5YpYeuw==",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\Desktop\\Diploma\\Backend-QDAO\\QDAO.Application\\QDAO.Application.csproj",
   "expectedPackageFiles": [
@@ -22,6 +22,7 @@
     "C:\\Users\\User\\.nuget\\packages\\nethereum.autogen.contractapi\\4.11.0\\nethereum.autogen.contractapi.4.11.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\nethereum.fx\\4.12.0\\nethereum.fx.4.12.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\npgsql\\7.0.2\\npgsql.7.0.2.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\portable.bouncycastle\\1.8.2\\portable.bouncycastle.1.8.2.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\system.collections\\4.0.11\\system.collections.4.0.11.nupkg.sha512",

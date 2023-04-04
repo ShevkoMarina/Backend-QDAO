@@ -239,7 +239,11 @@
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\User\\Desktop\\Diploma\\Backend-QDAO\\Domain\\QDAO.Domain.csproj": {
+                "projectPath": "C:\\Users\\User\\Desktop\\Diploma\\Backend-QDAO\\Domain\\QDAO.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -255,6 +259,10 @@
             "Dapper": {
               "target": "Package",
               "version": "[2.0.123, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[7.0.2, )"
             }
           },
           "imports": [

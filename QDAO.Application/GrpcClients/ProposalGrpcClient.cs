@@ -24,7 +24,7 @@ namespace QDAO.Application.GrpcClients
                 ProposalId = proposalId
             };
 
-            var handler = _contractsManager.GetWeb3().Eth.GetContractQueryHandler<GetProposalByIdMessage>();
+            var handler = _contractsManager.Web3.Eth.GetContractQueryHandler<GetProposalByIdMessage>();
 
             var proposal = await handler.QueryAsync<ProposalDto>(_governorAddress, request);
 

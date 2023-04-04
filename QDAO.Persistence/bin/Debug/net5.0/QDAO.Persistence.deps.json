@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v5.0": {
       "QDAO.Persistence/1.0.0": {
         "dependencies": {
-          "Dapper": "2.0.123"
+          "Dapper": "2.0.123",
+          "QDAO.Domain": "1.0.0"
         },
         "runtime": {
           "QDAO.Persistence.dll": {}
@@ -20,6 +21,11 @@
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.0.123.33578"
           }
+        }
+      },
+      "QDAO.Domain/1.0.0": {
+        "runtime": {
+          "QDAO.Domain.dll": {}
         }
       }
     }
@@ -36,6 +42,11 @@
       "sha512": "sha512-RDFF4rBLLmbpi6pwkY7q/M6UXHRJEOerplDGE5jwEkP/JGJnBauAClYavNKJPW1yOTWRPIyfj4is3EaJxQXILQ==",
       "path": "dapper/2.0.123",
       "hashPath": "dapper.2.0.123.nupkg.sha512"
+    },
+    "QDAO.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

@@ -33,7 +33,7 @@ namespace QDAO.Application.GrpcClients
             {
                 TimelockAddress = _contractsManager.GetTimelockAddress(),
                 TokenAddress = _contractsManager.GetTokenAddress(),
-                VotingPeriod = 5
+                VotingPeriod = 2
             };
 
             defaultTx.Data = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(request.GetCallData());

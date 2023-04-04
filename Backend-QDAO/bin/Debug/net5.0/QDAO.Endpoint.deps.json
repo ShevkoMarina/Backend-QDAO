@@ -892,7 +892,8 @@
       },
       "QDAO.Persistence/1.0.0": {
         "dependencies": {
-          "Dapper": "2.0.123"
+          "Dapper": "2.0.123",
+          "QDAO.Domain": "1.0.0"
         },
         "runtime": {
           "QDAO.Persistence.dll": {}

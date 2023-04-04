@@ -1,4 +1,6 @@
-﻿using Nethereum.RPC.Eth.DTOs;
+﻿using Nethereum.Contracts;
+using Nethereum.RPC.Eth.DTOs;
+using QDAO.Application.Services.DTOs.Events;
 using QDAO.Domain;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,13 +9,20 @@ namespace QDAO.Application.Services
 {
     public class TransactionService
     {
-        private const string Web3Url = "https://eth-goerli.g.alchemy.com/v2/PU1jr72jAHmucb_oUHObuiwoCCsdtODL";
+       // private const string Web3Url = "https://eth-goerli.g.alchemy.com/v2/PU1jr72jAHmucb_oUHObuiwoCCsdtODL";
 
         private Nethereum.Web3.Web3 _web3Client;
 
         public TransactionService()
         {
-            _web3Client = new Nethereum.Web3.Web3(Web3Url);
+            _web3Client = new Nethereum.Web3.Web3("http://127.0.0.1:8545");
+        }
+
+        public async Task GetTransactionEventsByHash(string txHash)
+        {
+            var receipt = await _web3Client.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(txHash);
+
+            var events = receipt.DecodeAllEvents<ProposalCreatedEventDto>();
         }
 
         public async Task<string> Execute(string transaction)
@@ -30,6 +39,7 @@ namespace QDAO.Application.Services
 
             return txHash;
         }
+
 
         public async Task<int> GetCurrentNonce(string accountAddress)
         {

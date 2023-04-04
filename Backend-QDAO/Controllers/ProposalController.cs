@@ -4,6 +4,7 @@ using QDAO.Application.Handlers.Proposal;
 using QDAO.Application.Services;
 using QDAO.Domain;
 using QDAO.Endpoint.DTOs;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -21,7 +22,7 @@ namespace QDAO.Endpoint.Controllers
             TransactionService transactionService,
             IMediator mediator)
         {
-        
+
             _mediator = mediator;
             _transactionService = transactionService;
         }
@@ -48,7 +49,6 @@ namespace QDAO.Endpoint.Controllers
         }
 
 
-
         [HttpPost("create")]
         public async Task<ActionResult<Transaction>> CreateProposal(
             [FromBody] CreateProposalDto request,
@@ -62,9 +62,12 @@ namespace QDAO.Endpoint.Controllers
 
 
         [HttpPost("queue")]
-        public async Task QueueProposal()
+        public async Task<ActionResult> QueueProposal([FromQuery] uint proposalId, CancellationToken ct)
         {
+            var query = new QueueProposal.Request(proposalId);
+            var response = await _mediator.Send(query, ct);
 
+            return Ok(response);
         }
 
         [HttpPost("execute")]
@@ -78,6 +81,38 @@ namespace QDAO.Endpoint.Controllers
         {
             var txHash = await _transactionService.Execute(transaction);
             return Ok(txHash);
+        }
+
+        [HttpGet("events")]
+        public async Task<ActionResult> GetProposalEventsByTxHash([FromQuery] string hash)
+        {
+            await _transactionService.GetTransactionEventsByHash(hash);
+            return Ok();
+        }
+
+        [HttpPost("vote")]
+        public async Task<ActionResult> VoteForProposal([FromQuery] uint proposalId, [FromQuery] bool support, CancellationToken ct)
+        {
+            var query = new VoteProposal.Request(proposalId,support);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
+        }
+
+        [HttpPost("approve")]
+        public async Task<ActionResult> ApproveProposal([FromQuery] uint proposalId, CancellationToken ct)
+        {
+            var query = new ApproveByPrincipal.Request(proposalId);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
+        }
+
+
+        [HttpGet("get-by-user")]
+        public async Task<ActionResult> GetProposalsByUserId([FromQuery] uint userId, CancellationToken ct)
+        {
+            throw new NotImplementedException();
         }
     }
 }

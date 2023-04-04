@@ -18,7 +18,7 @@ namespace QDAO.Persistence.Repositories.ProposalQuorum
 
         public async Task<ProposalWIthQueueId> GetNext(CancellationToken ct)
         {
-            var result = await _database.QuerySingleIrDefaultAsync<ProposalWIthQueueId>(
+            var result = await _database.QuerySingleOrDefaultAsync<ProposalWIthQueueId>(
                 ProposalQuorumQueueSql.GetNext,
                 ct);
 
