@@ -15,6 +15,7 @@ using QDAO.Application.GrpcClients;
 using QDAO.Endpoint.HostedServices;
 using QDAO.Persistence.Repositories.ProposalQuorum;
 using QDAO.Persistence;
+using QDAO.Persistence.Repositories.Transaction;
 
 namespace QDAO.Endpoint
 {
@@ -26,14 +27,18 @@ namespace QDAO.Endpoint
             services.AddControllers();
             services.AddSwaggerGen();
 
-            services.AddScoped<TransactionService>();
+            services.AddScoped<TransactionCreator>();
             services.AddScoped<ContractsManager>();
 
 
             services.AddScoped<ProposalGrpcClient>();
             services.AddScoped<AdminGrpcClient>();
 
-           // services.AddHostedService<QuorumCrisisBackgroundService>();
+
+            services.AddSingleton<TransactionRepository>();
+         
+
+            // services.AddHostedService<QuorumCrisisBackgroundService>();
 
             services.AddScoped<ProposalQrisisQueueRepository>();
             services.AddSingleton<IDapperExecutor, DapperExecutor>();

@@ -16,10 +16,10 @@ namespace QDAO.Endpoint.Controllers
     public class ProposalController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly TransactionService _transactionService;
+        private readonly TransactionCreator _transactionService;
 
         public ProposalController(
-            TransactionService transactionService,
+            TransactionCreator transactionService,
             IMediator mediator)
         {
 
@@ -62,33 +62,17 @@ namespace QDAO.Endpoint.Controllers
 
 
         [HttpPost("queue")]
-        public async Task<ActionResult> QueueProposal([FromQuery] uint proposalId, CancellationToken ct)
+        public async Task<ActionResult> QueueProposal(
+            [FromQuery] uint proposalId,
+            [FromQuery] string account,
+            CancellationToken ct)
         {
-            var query = new QueueProposal.Request(proposalId);
+            var query = new QueueProposal.Request(proposalId, account);
             var response = await _mediator.Send(query, ct);
 
             return Ok(response);
         }
 
-        [HttpPost("execute")]
-        public async Task ExecuteProposal()
-        {
-
-        }
-
-        [HttpPost("execute-transaction")]
-        public async Task<ActionResult<string>> ExecuteTransaction([FromBody] string transaction)
-        {
-            var txHash = await _transactionService.Execute(transaction);
-            return Ok(txHash);
-        }
-
-        [HttpGet("events")]
-        public async Task<ActionResult> GetProposalEventsByTxHash([FromQuery] string hash)
-        {
-            await _transactionService.GetTransactionEventsByHash(hash);
-            return Ok();
-        }
 
         [HttpPost("vote")]
         public async Task<ActionResult> VoteForProposal([FromQuery] uint proposalId, [FromQuery] bool support, CancellationToken ct)

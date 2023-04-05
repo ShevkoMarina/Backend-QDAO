@@ -11,7 +11,6 @@ namespace QDAO.Domain
         public string AddressTo { get; set; }
         public long Value { get; set; }
         public string Data { get; set; }
-
     }
 }
 

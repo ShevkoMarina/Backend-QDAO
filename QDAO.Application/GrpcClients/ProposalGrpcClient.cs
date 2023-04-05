@@ -14,7 +14,7 @@ namespace QDAO.Application.GrpcClients
         {
             _contractsManager = contractsManager;
 
-            _governorAddress = _contractsManager.GetGovernorAddress();
+            _governorAddress = _contractsManager.GetGovernorDelegator();
         }
 
         public async Task<ProposalDto> GetProposalById(long proposalId)

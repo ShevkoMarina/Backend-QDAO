@@ -2,6 +2,7 @@
 using QDAO.Application.Services;
 using QDAO.Application.Services.DTOs.Events;
 using QDAO.Persistence.Repositories.Proposal;
+using QDAO.Persistence.Repositories.Transaction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace QDAO.Application.Pipelines
         private readonly ContractsManager _manager;
 
         private readonly ProposalRepository _repository;
-        // Репка с обработкой транзакционных хешей
+        private readonly TransactionRepository _transactionRepostiory;
         public EventsPipeline(ContractsManager manager)
         {
             _manager = manager;
@@ -25,10 +26,10 @@ namespace QDAO.Application.Pipelines
         public async Task PipeAsync(CancellationToken stoppingToken)
         {
            
-            var txHash = "";
-            var receipt = await _manager.Web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(txHash);
+           // _transactionRepostiory
+         //   var receipt = await _manager.Web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(txHash);
 
-            var proposalCreationEvents = receipt.DecodeAllEvents<ProposalCreatedEventDto>();
+          //  var proposalCreationEvents = receipt.DecodeAllEvents<ProposalCreatedEventDto>();
           
 
             

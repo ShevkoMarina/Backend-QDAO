@@ -36,6 +36,11 @@ namespace QDAO.Persistence
             return result;
         }
 
+        public Task ExecuteAsync(string command, DbConnection connection, CancellationToken ct, object parameters = null)
+        {
+            return connection.ExecuteAsync(BuildCommand(command, parameters, ct));
+        }
+
         protected CommandDefinition BuildCommand(
             string commandText,
             object parameters,

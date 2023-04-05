@@ -15,16 +15,15 @@ namespace QDAO.Application.Handlers.Proposal
 {
     public class QueueProposal
     {
-
-        public record Request(uint ProposalId) : IRequest<Response>;
+        public record Request(uint ProposalId, string Account) : IRequest<Response>;
 
         public record Response(RawTransaction Transaction);
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private TransactionService _transactionService;
+            private TransactionCreator _transactionService;
 
-            public Handler(TransactionService transactionService)
+            public Handler(TransactionCreator transactionService)
             {
                 _transactionService = transactionService;
             }
@@ -34,16 +33,13 @@ namespace QDAO.Application.Handlers.Proposal
                 var txMessage = new QueueMessage
                 {
                     ProposalId = request.ProposalId,
-                   
-
                 };
 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
 
-                var rawTx = await _transactionService.GetDefaultRawTransaction("0x618E0fFEe21406f493D22f9163c48E2D036de6B0");
+                var rawTx = await _transactionService.GetDefaultRawTransaction(request.Account);
 
                 rawTx.Data = dataHex;
-
 
                 return new Response(rawTx);
             }

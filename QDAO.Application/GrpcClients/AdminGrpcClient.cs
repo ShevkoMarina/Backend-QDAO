@@ -12,17 +12,17 @@ namespace QDAO.Application.GrpcClients
     public class AdminGrpcClient
     {
         private readonly ContractsManager _contractsManager;
-        private readonly TransactionService _transactionService;
+        private readonly TransactionCreator _transactionService;
 
         private readonly string _governorAddress;
 
         public AdminGrpcClient(ContractsManager contractsManager, 
-            TransactionService transactionService)
+            TransactionCreator transactionService)
         {
             _contractsManager = contractsManager;
             _transactionService = transactionService;
 
-            _governorAddress = _contractsManager.GetGovernorAddress();
+            _governorAddress = _contractsManager.GetGovernorDelegator();
         }
 
         public async Task InitializeGovernor()

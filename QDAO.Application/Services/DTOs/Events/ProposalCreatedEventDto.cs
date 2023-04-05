@@ -1,10 +1,5 @@
 ﻿using Nethereum.ABI.FunctionEncoding.Attributes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QDAO.Application.Services.DTOs.Events
 {
@@ -12,7 +7,7 @@ namespace QDAO.Application.Services.DTOs.Events
     public class ProposalCreatedEventDto : IEventDTO
     {
         [Parameter("uint256", "id", 1)]
-        public BigInteger Id { get; set; }
+        public uint Id { get; set; }
 
         [Parameter("address", "proposer", 2)]
         public string Proposer { get; set; }
@@ -21,15 +16,15 @@ namespace QDAO.Application.Services.DTOs.Events
         public List<string> Targets { get; set; }
 
         [Parameter("uint[]", "values", 4)]
-        public List<BigInteger> Values{ get; set; }
+        public List<uint> Values{ get; set; }
 
         [Parameter("bytes[]", "calldatas", 5)]
         public List<byte[]> Calldatas { get; set; }
 
         [Parameter("uint256", "startBlock", 6)]
-        public BigInteger StartBlock { get; set; }
+        public uint StartBlock { get; set; }
 
         [Parameter("uint256", "endBlock", 7)]
-        public BigInteger EndBlock { get; set; }
+        public uint EndBlock { get; set; }
     }
 }

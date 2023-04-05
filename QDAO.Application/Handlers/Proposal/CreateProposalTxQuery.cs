@@ -21,9 +21,9 @@ namespace QDAO.Application.Handlers.Proposal
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private TransactionService _transactionService;
+            private TransactionCreator _transactionService;
 
-            public Handler(TransactionService transactionService)
+            public Handler(TransactionCreator transactionService)
             {
                 _transactionService = transactionService;
             }
