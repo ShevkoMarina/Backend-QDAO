@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using QDAO.Application.Services;
 using QDAO.Application.Services.DTOs.Events;
 using QDAO.Persistence.Repositories.Transaction;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,6 +45,12 @@ namespace QDAO.Application.Handlers.Transaction
                 {
                     events = receipt.DecodeAllEvents<ProposalCreatedEventDto>();
                 }
+
+               // var genericEvents = events.Select(e => (IEventDTO)e.Event);
+
+               // var type = genericEvents.First().GetType();
+
+               // var d = genericEvents.First();
 
                 return new Response(events);
             }
