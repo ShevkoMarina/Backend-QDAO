@@ -1,6 +1,7 @@
 ﻿using Nethereum.Contracts;
 using QDAO.Application.Services;
 using QDAO.Application.Services.DTOs.Events;
+using QDAO.Persistence;
 using QDAO.Persistence.Repositories.Proposal;
 using QDAO.Persistence.Repositories.Transaction;
 using System;
@@ -15,17 +16,22 @@ namespace QDAO.Application.Pipelines
     public class EventsProcessingPipeline
     {
         private readonly ContractsManager _manager;
-        private readonly ProposalRepository _repository;
+        private readonly ProposalRepository _proposalRepository;
         private readonly TransactionRepository _transactionRepostiory;
         private readonly TransactionEventsDecoder _transactionEventsDecoder;
+        private readonly IDapperExecutor _database;
 
         public EventsProcessingPipeline(ContractsManager manager,
             TransactionRepository transactionRepository,
-            TransactionEventsDecoder transactionEventsDecoder)
+            TransactionEventsDecoder transactionEventsDecoder,
+            ProposalRepository proposalRepository,
+            IDapperExecutor database)
         {
             _manager = manager;
             _transactionRepostiory = transactionRepository;
             _transactionEventsDecoder = transactionEventsDecoder;
+            _proposalRepository = proposalRepository;
+            _database = database;
         }
 
         public async Task PipeAsync(CancellationToken stoppingToken)
@@ -53,7 +59,19 @@ namespace QDAO.Application.Pipelines
 
                 if (contractEvent is ProposalCreatedEventDto)
                 {
-                    // Сохранить в БД
+                    var proposalCreationEvent = (ProposalCreatedEventDto) contractEvent;
+
+                    using var connection = await _database.OpenConnectionAsync(stoppingToken);
+                    await _proposalRepository.SaveProposal(
+                        new Domain.Proposal
+                        {
+                            Id = proposalCreationEvent.Id,
+                            StartBlock = proposalCreationEvent.StartBlock,
+                            EndBlock = proposalCreationEvent.EndBlock,
+                            Proposer = 1
+                        }, 
+                        connection,
+                        stoppingToken);
                 }
             }
         }

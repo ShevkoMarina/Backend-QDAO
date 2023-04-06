@@ -17,6 +17,7 @@ using QDAO.Persistence.Repositories.ProposalQuorum;
 using QDAO.Persistence;
 using QDAO.Persistence.Repositories.Transaction;
 using QDAO.Application.Pipelines;
+using QDAO.Persistence.Repositories.Proposal;
 
 namespace QDAO.Endpoint
 {
@@ -37,11 +38,12 @@ namespace QDAO.Endpoint
 
 
             services.AddSingleton<TransactionRepository>();
+            services.AddSingleton<ProposalRepository>();
 
             services.AddScoped<TransactionEventsDecoder>();
          
 
-            services.AddHostedService<EventsProcessingBgService>();
+        //    services.AddHostedService<EventsProcessingBgService>();
             services.AddScoped<EventsProcessingPipeline>();
 
             services.AddScoped<ProposalQrisisQueueRepository>();

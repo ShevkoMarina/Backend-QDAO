@@ -4,7 +4,7 @@
     {
         public uint Id { get; set; }
 
-        public string Proposer { get; set; }
+        public uint Proposer { get; set; }
 
         public string Name { get; set; }
 
