@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QDAO.Domain;
+using System;
 using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,8 +27,8 @@ namespace QDAO.Persistence.Repositories.Proposal
                        new
                        {
                            id = (long)proposal.Id,
-                           start_block = (long)proposal.StartBlock,
-                           end_block = (long)proposal.EndBlock,
+                           start_block = (long)proposal.VotingInterval.StartBlock,
+                           end_block = (long)proposal.VotingInterval.EndBlock,
                            proposer_id = (long)proposal.Proposer,
                        }
                    );
@@ -36,6 +37,20 @@ namespace QDAO.Persistence.Repositories.Proposal
             {
 
             }
+        }
+
+        public async Task InsertState(ProposalState state, uint proposalId, DbConnection connection, CancellationToken ct)
+        {
+            await _database.ExecuteAsync(
+                      ProposalSql.InsertState,
+                      connection,
+                      ct,
+                      new
+                      {
+                          proposal_id = (long)proposalId,
+                          state = (short)state
+                      }
+                  );
         }
     }
 }

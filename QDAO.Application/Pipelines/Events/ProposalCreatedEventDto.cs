@@ -1,6 +1,7 @@
 ﻿using Nethereum.ABI.FunctionEncoding.Attributes;
 using System.Collections.Generic;
 
+// исравить сборку
 namespace QDAO.Application.Services.DTOs.Events
 {
     [Event("ProposalCreated")]

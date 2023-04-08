@@ -1,6 +1,8 @@
 ﻿using Nethereum.Contracts;
+using QDAO.Application.Pipelines.Events;
 using QDAO.Application.Services;
 using QDAO.Application.Services.DTOs.Events;
+using QDAO.Domain;
 using QDAO.Persistence;
 using QDAO.Persistence.Repositories.Proposal;
 using QDAO.Persistence.Repositories.Transaction;
@@ -62,14 +64,30 @@ namespace QDAO.Application.Pipelines
                     var proposalCreationEvent = (ProposalCreatedEventDto) contractEvent;
 
                     using var connection = await _database.OpenConnectionAsync(stoppingToken);
+                    // добавить создание транзакции
                     await _proposalRepository.SaveProposal(
                         new Domain.Proposal
                         {
                             Id = proposalCreationEvent.Id,
-                            StartBlock = proposalCreationEvent.StartBlock,
-                            EndBlock = proposalCreationEvent.EndBlock,
+                            VotingInterval = new VotingInterval(proposalCreationEvent.StartBlock,proposalCreationEvent.EndBlock),
                             Proposer = 1
                         }, 
+                        connection,
+                        stoppingToken);
+
+                    await _proposalRepository.InsertState(
+                        ProposalState.Active,
+                        proposalCreationEvent.Id,
+                        connection,
+                        stoppingToken);
+                }
+                if (contractEvent is ProposalQueuedEventDto)
+                {
+                    var proposalQueueEvent = (ProposalQueuedEventDto)contractEvent;
+                    using var connection = await _database.OpenConnectionAsync(stoppingToken);
+                    await _proposalRepository.InsertState(
+                        ProposalState.Active,
+                        proposalQueueEvent.Id,
                         connection,
                         stoppingToken);
                 }

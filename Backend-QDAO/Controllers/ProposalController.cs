@@ -92,10 +92,14 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        // Нужен синхронизатор статусов пропозалов
+        // Тут нужен тонкий пропозал - тока имя и статус
+        
 
         [HttpGet("get-by-user")]
         public async Task<ActionResult> GetProposalsByUserId([FromQuery] uint userId, CancellationToken ct)
         {
+            // можно мониторить переходы по статусам и алертить если что то пошло не так
             throw new NotImplementedException();
         }
     }

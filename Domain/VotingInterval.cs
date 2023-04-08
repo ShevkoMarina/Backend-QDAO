@@ -4,10 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QDAO.Application.Services
+namespace QDAO.Domain
 {
-    class ProposalService
-    {
-       
-    }
+    public record VotingInterval(uint StartBlock, uint EndBlock);
 }

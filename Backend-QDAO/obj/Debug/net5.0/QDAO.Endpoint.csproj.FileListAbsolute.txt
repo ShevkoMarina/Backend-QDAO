@@ -52,3 +52,6 @@ C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Dapper.
 C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\QDAO.Persistence.dll
 C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\QDAO.Persistence.pdb
 C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Npgsql.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Prometheus.NetCore.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Prometheus.NetStandard.dll
+C:\Users\User\Desktop\Diploma\Backend-QDAO\Backend-QDAO\bin\Debug\net5.0\Prometheus.AspNetCore.dll

@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QDAO.Contracts", "QDAO.Cont
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QDAO.Domain", "Domain\QDAO.Domain.csproj", "{EBBF76D7-C7AB-4D6D-BF67-695BAEE0354D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QDAO.Persistence", "QDAO.Persistence\QDAO.Persistence.csproj", "{893AFB94-0DC8-4B84-B89D-C7600D9846A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QDAO.Persistence", "QDAO.Persistence\QDAO.Persistence.csproj", "{893AFB94-0DC8-4B84-B89D-C7600D9846A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QDAO.Monitoring", "QDAO.Monitoring\QDAO.Monitoring.csproj", "{9C394AEF-2152-4496-84D0-5DCAA5678E09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{893AFB94-0DC8-4B84-B89D-C7600D9846A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{893AFB94-0DC8-4B84-B89D-C7600D9846A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{893AFB94-0DC8-4B84-B89D-C7600D9846A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C394AEF-2152-4496-84D0-5DCAA5678E09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C394AEF-2152-4496-84D0-5DCAA5678E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C394AEF-2152-4496-84D0-5DCAA5678E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C394AEF-2152-4496-84D0-5DCAA5678E09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

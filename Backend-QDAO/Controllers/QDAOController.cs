@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.Admin;
 using QDAO.Application.Handlers.DAO;
 using QDAO.Endpoint.DTOs.qDAO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -1,4 +1,5 @@
-﻿using Nethereum.RPC.Eth.DTOs;
+﻿using Nethereum.Contracts;
+using Nethereum.RPC.Eth.DTOs;
 using QDAO.Domain;
 using System.Threading.Tasks;
 

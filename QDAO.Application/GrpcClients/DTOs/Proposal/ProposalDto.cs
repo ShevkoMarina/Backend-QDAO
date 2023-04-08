@@ -25,8 +25,8 @@ namespace QDAO.Application.GrpcClients.DTOs
 
         [Parameter("uint256[]", "values", 5)]
         public  List<BigInteger> Values { get; set; }
-      //  [Parameter("bytes[]", "calldatas", 6)]
-     //   public  List<byte[]> Calldatas { get; set; }
+       // [Parameter("bytes[]", "calldatas", 6)]
+      //  public  List<byte[]> Calldatas { get; set; }
 
         [Parameter("uint256", "startBlock", 7)]
         public  BigInteger StartBlock { get; set; }
