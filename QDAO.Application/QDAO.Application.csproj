@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.17" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
     <PackageReference Include="Nethereum.Autogen.ContractApi" Version="4.11.0" />
     <PackageReference Include="Nethereum.Fx" Version="4.12.0" />

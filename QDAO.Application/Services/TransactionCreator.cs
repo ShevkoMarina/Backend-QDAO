@@ -30,9 +30,6 @@ namespace QDAO.Application.Services
             {
                 Nonce = nonce,
                 AddressTo = _contractsManager.GetGovernorDelegator(),
-                Gas = 20000000000,
-                GasLimit = 200000,
-                Value = 0
             };
         }
     }

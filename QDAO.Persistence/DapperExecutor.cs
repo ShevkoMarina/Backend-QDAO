@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Npgsql;
-using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -56,6 +55,13 @@ namespace QDAO.Persistence
                 transaction: transaction,
                 cancellationToken: ct
                 );
+        }
+
+        public async Task<T> QuerySingleOrDefaultAsync<T>(string command, CancellationToken ct, DbConnection connection, object parameters = null)
+        {
+            var result = await connection.QuerySingleAsync<T>(BuildCommand(command, parameters, ct));
+
+            return result;
         }
     }
 }

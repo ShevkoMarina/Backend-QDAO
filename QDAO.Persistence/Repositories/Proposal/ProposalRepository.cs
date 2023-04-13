@@ -1,5 +1,6 @@
 ﻿using QDAO.Domain;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,6 +52,20 @@ namespace QDAO.Persistence.Repositories.Proposal
                           state = (short)state
                       }
                   );
+        }
+
+        public async Task<IReadOnlyCollection<ProposalThin>> GetProposalsByProposerId(long proposerId, CancellationToken ct)
+        {
+            var proposals = await _database.QueryAsync<ProposalThin>(
+                ProposalSql.GetByProposer,
+                ct,
+                new 
+                {
+                    proposer_id = proposerId
+                }
+             );
+
+            return proposals;
         }
     }
 }

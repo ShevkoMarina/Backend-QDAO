@@ -17,18 +17,16 @@ namespace QDAO.Endpoint.Controllers
             _mediator = mediator;
         }
 
-        [Route("balance")]
-        [HttpGet]
-        public async Task<ActionResult> GetBalance([FromQuery] string address, CancellationToken ct)
+        [HttpGet("balance")]
+        public async Task<ActionResult<long>> GetBalance([FromQuery] string signer, CancellationToken ct)
         {
-            var query = new GetBalanceQuery.Request(address);
+            var query = new GetBalanceQuery.Request(signer);
             var response = await _mediator.Send(query, ct);
 
             return Ok(response.Balance);
         }
 
-        [Route("current-vote-weight")]
-        [HttpGet]
+        [HttpGet("current-vote-weight")]
         public async Task<ActionResult> GetCurrentVoteWeight([FromQuery] string address, CancellationToken ct)
         {
             var query = new GetBalanceQuery.Request(address);
@@ -38,8 +36,7 @@ namespace QDAO.Endpoint.Controllers
         }
 
 
-        [Route("delegate")]
-        [HttpGet]
+        [HttpGet("delegate")]
         public async Task<ActionResult> Delegate([FromQuery] string delegatee, CancellationToken ct)
         {
             var signer = "0xd3b8B391c21F9B2DF09a30a3C8B270227a49cC4D";
@@ -49,8 +46,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response.TransactionData);
         }
 
-        [Route("transfer")]
-        [HttpGet]
+        [HttpGet("transfer")]
         public async Task<ActionResult> Transfer(
             [FromQuery] string dstAccount,
             [FromQuery] uint amount,

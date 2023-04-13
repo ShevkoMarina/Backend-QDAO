@@ -6,6 +6,7 @@ using QDAO.Application.Services;
 using QDAO.Application.Services.DTOs.VotingPeriod;
 using QDAO.Application.Utils;
 using QDAO.Domain;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading;
@@ -15,35 +16,39 @@ namespace QDAO.Application.Handlers.Proposal
 {
     public static class CreateProposalTxQuery
     {
-        public record Request(string Name, string Description) : IRequest<Response>;
+        public record Request(
+            string Name,
+            string Description,
+            ProposalType Type,
+            long NewValue
+            ) : IRequest<Response>;
 
-        public record Response(RawTransaction Transaction);
+        public record Response(RawTransaction RawTransaction);
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private TransactionCreator _transactionService;
+            private readonly TransactionCreator _transactionService;
+            private readonly ContractsManager _contractsManager;
 
-            public Handler(TransactionCreator transactionService)
+            public Handler(
+                TransactionCreator transactionService,
+                ContractsManager contractsManager)
             {
                 _transactionService = transactionService;
+                _contractsManager = contractsManager;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken ct)
             {
-                var updateVotingMessage = new UpdateVotingPeriodTransaction
-                {
-                    NewValue = 5
-                };
-
+               
                 var callDatas = new List<byte[]>();
-                callDatas.Add(updateVotingMessage.GetCallData());
+                callDatas.Add(GetProposalCalldata(request.Type));
 
                 var txMessage = new CreateProposalTransaction
                 {
                     CalldatasForTx = callDatas,
                     Values = new List<BigInteger>() { 0 },
-                    Targets = new List<string>() { "0x25B9a573399CF9D1E50fcdE89aB8782271531CeE" }
-         
+                    Targets = new List<string>() { _contractsManager.GetGovernorDelegator() }
                 };
 
               
@@ -58,7 +63,22 @@ namespace QDAO.Application.Handlers.Proposal
             }
         }
 
-        
+        private static byte[] GetProposalCalldata(ProposalType proposalType)
+        {
+            if (proposalType == ProposalType.UpdateVotingPeriod)
+            {
+                var updateVotingMessage = new UpdateVotingPeriodTransaction
+                {
+                    NewValue = 5
+                };
+
+                return updateVotingMessage.GetCallData();
+            }
+
+            return Array.Empty<byte>();
+        }
+
+
 
         [Function("createProposal", "uint256")]
         public class CreateProposalTransaction : FunctionMessage

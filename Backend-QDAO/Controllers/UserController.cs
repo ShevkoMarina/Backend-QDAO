@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using QDAO.Application.Handlers.User;
 using QDAO.Endpoint.DTOs;
 using QDAO.Endpoint.DTOs.User;
 using System;
@@ -13,19 +15,34 @@ namespace QDAO.Endpoint.Controllers
     [Route("user")]
     public class UserController : ControllerBase
     {
-        [Route("auth")]
-        [HttpPost]
+        private readonly IMediator _mediator;
+
+        public UserController(IMediator mediator)
+        {
+            _mediator = mediator;    
+        }
+
+        [HttpPost("auth")]
         public async Task<ActionResult> AuthorizeUser([FromBody] AuthorizeUserRequestDto request, CancellationToken ct)
         {
             return Ok();
         }
 
 
-        [Route("add")]
-        [HttpPost]
-        public async Task<ActionResult> AddUser([FromBody] AddUserDto request, CancellationToken ct)
+        [HttpPost("add")]
+        public async Task<ActionResult<long>> AddUser([FromBody] AddUserDto request, CancellationToken ct)
         {
-            return Ok();
+            var query = new AddUserCommand.Request(request.Login, request.Password, request.PublicAddress);
+            var response = await _mediator.Send(query, ct);
+
+            return response.UserId;
+        }
+
+        [HttpPost("add-admin")]
+        public async Task AddAdmin(
+            [FromBody] AddUserDto request, CancellationToken ct)
+        {
+
         }
     }
 }

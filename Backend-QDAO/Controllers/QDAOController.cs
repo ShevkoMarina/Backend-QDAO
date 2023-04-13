@@ -44,5 +44,18 @@ namespace QDAO.Endpoint.Controllers
         {
             return Ok();
         }
+
+        [HttpPost("add-principals")]
+        public async Task<ActionResult> AddPrincipals(
+            [FromQuery] int[] userIds,
+            [FromQuery] short requiredApprovals,
+            CancellationToken ct)
+        {
+            var query = new AddPrincipalsQuery.Request(userIds, requiredApprovals);
+
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
+        }
     }
 }

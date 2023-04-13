@@ -1,24 +1,18 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using QDAO.Application;
 using QDAO.Application.Services;
 using QDAO.Application.Handlers.Proposal;
 using QDAO.Application.GrpcClients;
-using QDAO.Endpoint.HostedServices;
-using QDAO.Persistence.Repositories.ProposalQuorum;
 using QDAO.Persistence;
-using QDAO.Persistence.Repositories.Transaction;
 using QDAO.Application.Pipelines;
-using QDAO.Persistence.Repositories.Proposal;
 using Prometheus;
+using QDAO.Persistence.Repositories.User;
+using QDAO.Persistence.Repositories.Transaction;
+using QDAO.Persistence.Repositories.Proposal;
+using QDAO.Persistence.Repositories.ProposalQuorum;
 
 namespace QDAO.Endpoint
 {
@@ -40,6 +34,7 @@ namespace QDAO.Endpoint
 
             services.AddSingleton<TransactionRepository>();
             services.AddSingleton<ProposalRepository>();
+            services.AddSingleton<UserRepository>();
 
             services.AddScoped<TransactionEventsDecoder>();
          
@@ -52,7 +47,6 @@ namespace QDAO.Endpoint
 
           
             services.AddMediatR(typeof(CreateProposalTxQuery.Handler));
-        
         }
 
     

@@ -4,7 +4,9 @@ using QDAO.Application.Handlers.Proposal;
 using QDAO.Application.Services;
 using QDAO.Domain;
 using QDAO.Endpoint.DTOs;
+using QDAO.Endpoint.DTOs.Proposal;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -50,14 +52,19 @@ namespace QDAO.Endpoint.Controllers
 
 
         [HttpPost("create")]
-        public async Task<ActionResult<Transaction>> CreateProposal(
+        public async Task<ActionResult<RawTransaction>> CreateProposal(
             [FromBody] CreateProposalDto request,
             CancellationToken ct)
         {
-            var query = new CreateProposalTxQuery.Request(request.Name, request.Description);
+            var query = new CreateProposalTxQuery.Request(
+                request.Name,
+                request.Description,
+                ProposalType.UpdateVotingPeriod, 
+                request.NewValue);
+
             var response = await _mediator.Send(query, ct);
 
-            return Ok(response);
+            return Ok(response.RawTransaction);
         }
 
 
@@ -97,10 +104,15 @@ namespace QDAO.Endpoint.Controllers
         
 
         [HttpGet("get-by-user")]
-        public async Task<ActionResult> GetProposalsByUserId([FromQuery] uint userId, CancellationToken ct)
-        {
+        public async Task<ActionResult<IReadOnlyCollection<ProposalThin>>> GetProposalsByUserId(
+            [FromQuery] long userId,
+            CancellationToken ct)        {
             // можно мониторить переходы по статусам и алертить если что то пошло не так
-            throw new NotImplementedException();
+
+            var query = new GetProposalsByUserQuery.Request(userId);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response.Proposals);
         }
     }
 }

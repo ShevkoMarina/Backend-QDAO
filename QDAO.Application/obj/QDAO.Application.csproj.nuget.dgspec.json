@@ -39,6 +39,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -104,6 +110,10 @@
             "MediatR": {
               "target": "Package",
               "version": "[11.1.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.17, )"
             },
             "Microsoft.Extensions.Hosting.Abstractions": {
               "target": "Package",
