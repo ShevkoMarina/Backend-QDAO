@@ -19,9 +19,9 @@ namespace QDAO.Endpoint.Controllers
 
         [Route("balance")]
         [HttpGet]
-        public async Task<ActionResult> GetBalance([FromQuery] string address, CancellationToken ct)
+        public async Task<ActionResult<long>> GetBalance([FromQuery] string signer, CancellationToken ct)
         {
-            var query = new GetBalanceQuery.Request(address);
+            var query = new GetBalanceQuery.Request(signer);
             var response = await _mediator.Send(query, ct);
 
             return Ok(response.Balance);

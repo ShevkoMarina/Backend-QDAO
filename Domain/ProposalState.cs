@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QDAO.Domain
 {
-    public enum ProposalState
+    public enum ProposalState : short
     {
         Active = 0,
         Canceled = 1,
