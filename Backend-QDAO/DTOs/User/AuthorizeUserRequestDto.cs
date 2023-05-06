@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace QDAO.Endpoint.DTOs
+﻿namespace QDAO.Endpoint.DTOs
 {
     public class AuthorizeUserRequestDto
     {
         public string Login { get; set; }
-        public string AccountAddress { get; set; }
         public string Password { get; set; }
     }
 }

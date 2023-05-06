@@ -13,6 +13,7 @@ using QDAO.Persistence.Repositories.User;
 using QDAO.Persistence.Repositories.Transaction;
 using QDAO.Persistence.Repositories.Proposal;
 using QDAO.Persistence.Repositories.ProposalQuorum;
+using QDAO.Endpoint.HostedServices;
 
 namespace QDAO.Endpoint
 {
@@ -39,7 +40,7 @@ namespace QDAO.Endpoint
             services.AddScoped<TransactionEventsDecoder>();
          
 
-       //     services.AddHostedService<EventsProcessingBgService>();
+   //         services.AddHostedService<EventsProcessingBgService>();
             services.AddScoped<EventsProcessingPipeline>();
 
             services.AddScoped<ProposalQrisisQueueRepository>();
@@ -65,10 +66,12 @@ namespace QDAO.Endpoint
 
             app.UseRouting();
 
-            app.UseMetricServer();
+          //  app.UseMetricServer();
+            app.UseHttpMetrics();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapMetrics();
                 endpoints.MapControllers(); 
             });
         }

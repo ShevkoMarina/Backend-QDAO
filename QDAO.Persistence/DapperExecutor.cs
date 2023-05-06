@@ -30,7 +30,7 @@ namespace QDAO.Persistence
         public async Task<T> QuerySingleOrDefaultAsync<T>(string command, CancellationToken ct, object parameters = null)
         {
             await using var connection = await OpenConnectionAsync(ct);
-            var result = await connection.QuerySingleAsync<T>(BuildCommand(command, parameters, ct));
+            var result = await connection.QuerySingleOrDefaultAsync<T>(BuildCommand(command, parameters, ct));
 
             return result;
         }

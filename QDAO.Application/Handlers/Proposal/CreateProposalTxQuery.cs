@@ -1,14 +1,10 @@
 ﻿using MediatR;
 using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
-using Nethereum.Web3;
 using QDAO.Application.Services;
-using QDAO.Application.Services.DTOs.VotingPeriod;
-using QDAO.Application.Utils;
 using QDAO.Domain;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,18 +36,15 @@ namespace QDAO.Application.Handlers.Proposal
 
             public async Task<Response> Handle(Request request, CancellationToken ct)
             {
-               
-                var callDatas = new List<byte[]>();
-                callDatas.Add(GetProposalCalldata(request.Type));
+                var callData = GetProposalCalldata(request.Type, request.NewValue);
 
                 var txMessage = new CreateProposalTransaction
                 {
-                    CalldatasForTx = callDatas,
-                    Values = new List<BigInteger>() { 0 },
+                    CalldatasForTx = new List<byte[]> { callData },
+                    Values = new List<long>() { 0 },
                     Targets = new List<string>() { _contractsManager.GetGovernorDelegator() }
                 };
 
-              
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
 
                 var rawTx = await _transactionService.GetDefaultRawTransaction("0x618E0fFEe21406f493D22f9163c48E2D036de6B0");
@@ -63,18 +56,28 @@ namespace QDAO.Application.Handlers.Proposal
             }
         }
 
-        private static byte[] GetProposalCalldata(ProposalType proposalType)
+        private static byte[] GetProposalCalldata(ProposalType proposalType, long newValue)
         {
-            if (proposalType == ProposalType.UpdateVotingPeriod)
-            {
-                var updateVotingMessage = new UpdateVotingPeriodTransaction
-                {
-                    NewValue = 5
-                };
 
-                return updateVotingMessage.GetCallData();
+            switch (proposalType)
+            {
+                case ProposalType.UpdateVotingPeriod:
+                    var updateVotingMessage = new UpdateVotingPeriodTransaction
+                    {
+                        NewValue = newValue
+                    };
+
+                    return updateVotingMessage.GetCallData();
+                case ProposalType.UpdateQuorum:
+                    var updateQuorum = new UpdateVotingPeriodTransaction // todo
+                    {
+                        NewValue = newValue
+                    };
+
+                    return updateQuorum.GetCallData();
             }
 
+ 
             return Array.Empty<byte>();
         }
 
@@ -84,11 +87,19 @@ namespace QDAO.Application.Handlers.Proposal
         public class CreateProposalTransaction : FunctionMessage
         {
             [Parameter("address[]", "targets", 1)]
-            public virtual List<string> Targets { get; set; }
+            public List<string> Targets { get; set; }
             [Parameter("uint256[]", "values", 2)]
-            public virtual List<BigInteger> Values { get; set; } 
+            public List<long> Values { get; set; } 
             [Parameter("bytes[]", "calldatas", 3)]
-            public virtual List<byte[]> CalldatasForTx { get; set; }
+            public List<byte[]> CalldatasForTx { get; set; }
+        }
+
+
+        [Function("updateVotingPeriod")]
+        public class UpdateVotingPeriodTransaction : FunctionMessage
+        {
+            [Parameter("uint256", "_newValue", 1)]
+            public virtual long NewValue { get; set; }
         }
     }
 }

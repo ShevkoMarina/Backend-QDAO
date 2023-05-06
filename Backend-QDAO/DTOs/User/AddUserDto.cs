@@ -9,6 +9,6 @@ namespace QDAO.Endpoint.DTOs.User
     {
         public string Login { get; set; }
         public string Password { get; set; }
-        public string PublicAddress { get; set; }
+        public string Account { get; set; }
     }
 }

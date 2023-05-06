@@ -23,26 +23,27 @@ namespace QDAO.Endpoint.Controllers
         }
 
         [HttpPost("auth")]
-        public async Task<ActionResult> AuthorizeUser([FromBody] AuthorizeUserRequestDto request, CancellationToken ct)
+        public async Task<ActionResult<AuthorizeUserResponseDto>> AuthorizeUser([FromBody] AuthorizeUserRequestDto request, CancellationToken ct)
         {
-            return Ok();
+            var query = new AuthorizeUserQuery.Request(request.Login, request.Password);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(new AuthorizeUserResponseDto 
+            { 
+                UserId = response.User.UserId,
+                Role = response.User.Role,
+                Account = response.User.Account
+            });
         }
 
 
         [HttpPost("add")]
-        public async Task<ActionResult<long>> AddUser([FromBody] AddUserDto request, CancellationToken ct)
+        public async Task<ActionResult> AddUser([FromBody] AddUserDto request, CancellationToken ct)
         {
-            var query = new AddUserCommand.Request(request.Login, request.Password, request.PublicAddress);
+            var query = new AddUserCommand.Request(request.Login, request.Password, request.Account);
             var response = await _mediator.Send(query, ct);
 
-            return response.UserId;
-        }
-
-        [HttpPost("add-admin")]
-        public async Task AddAdmin(
-            [FromBody] AddUserDto request, CancellationToken ct)
-        {
-
+            return Ok();
         }
     }
 }

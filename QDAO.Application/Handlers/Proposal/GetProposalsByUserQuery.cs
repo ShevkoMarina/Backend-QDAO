@@ -20,8 +20,7 @@ namespace QDAO.Application.Handlers.Proposal
         {
             private readonly ProposalRepository _proposalRepository;
 
-            public Handler(
-                ProposalRepository proposalRepository)
+            public Handler(ProposalRepository proposalRepository)
             {
                 _proposalRepository = proposalRepository;
             }

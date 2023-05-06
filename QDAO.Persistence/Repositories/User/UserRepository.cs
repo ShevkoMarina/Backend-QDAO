@@ -1,6 +1,7 @@
 ﻿using QDAO.Domain;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -53,6 +54,21 @@ namespace QDAO.Persistence.Repositories.User
                 });
 
             return users;
+        }
+
+        public async Task<UserInfoDto> AuthorizeUser(string login, string password, CancellationToken ct)
+        {
+            var user = await _database.QuerySingleOrDefaultAsync<UserInfoDto>(
+                UserSql.GetByLoginAndPassword,
+                ct,
+                new
+                {
+                    login = login,
+                    password = password
+                });
+
+
+            return user;
         }
     }
 }
