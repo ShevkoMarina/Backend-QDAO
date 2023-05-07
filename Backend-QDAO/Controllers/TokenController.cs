@@ -17,6 +17,7 @@ namespace QDAO.Endpoint.Controllers
             _mediator = mediator;
         }
 
+
         [HttpGet("balance")]
         public async Task<ActionResult<long>> GetBalance([FromQuery] string signer, CancellationToken ct)
         {

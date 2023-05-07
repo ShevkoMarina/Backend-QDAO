@@ -3,6 +3,7 @@ using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using QDAO.Application.Services;
 using QDAO.Domain;
+using QDAO.Persistence.Repositories.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,21 +16,27 @@ namespace QDAO.Application.Handlers.Proposal
 {
     public class VoteProposal 
     {
-        public record Request(uint ProposalId, bool Support) : IRequest<Response>;
+        public record Request(long ProposalId, bool Support, int UserId) : IRequest<Response>;
 
         public record Response(RawTransaction Transaction);
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private TransactionCreator _transactionService;
+            private readonly TransactionCreator _transactionService;
+            private readonly UserRepository _userRepository;
 
-            public Handler(TransactionCreator transactionService)
+            public Handler(
+                TransactionCreator transactionService,
+                UserRepository userRepository)
             {
                 _transactionService = transactionService;
+                _userRepository = userRepository;
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<Response> Handle(Request request, CancellationToken ct)
             {
+                var userAccount = await _userRepository.GetUserAccountById(request.UserId, ct);
+
                 var txMessage = new VoteTransaction
                 {
                     ProposalId = request.ProposalId,
@@ -39,7 +46,7 @@ namespace QDAO.Application.Handlers.Proposal
 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
 
-                var rawTx = await _transactionService.GetDefaultRawTransaction("0x618E0fFEe21406f493D22f9163c48E2D036de6B0");
+                var rawTx = await _transactionService.GetDefaultRawTransaction(userAccount);
 
                 rawTx.Data = dataHex;
 

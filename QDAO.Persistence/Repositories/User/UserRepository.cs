@@ -56,6 +56,21 @@ namespace QDAO.Persistence.Repositories.User
             return users;
         }
 
+        public async Task<string> GetUserAccountById(
+          int userId,
+          CancellationToken ct)
+        {
+            var account = await _database.QuerySingleOrDefaultAsync<string>(
+                UserSql.GetUserAccontById,
+                ct,
+                new
+                {
+                    userId = userId
+                });
+
+            return account;
+        }
+
         public async Task<UserInfoDto> AuthorizeUser(string login, string password, CancellationToken ct)
         {
             var user = await _database.QuerySingleOrDefaultAsync<UserInfoDto>(

@@ -17,6 +17,9 @@
                                     role
                                     from users where id = any(@userIds) ;";
 
+        internal const string GetUserAccontById = @"--UserSql.GetUserAccountById
+                                                    select account from users where id = @userId";
+
         internal const string GetByLoginAndPassword = @"--UserSql.GetByLoginAndPassword
                                     select 
                                     id,

@@ -60,7 +60,8 @@ namespace QDAO.Endpoint.Controllers
                 request.Name,
                 request.Description,
                 ProposalType.UpdateVotingPeriod, 
-                request.NewValue);
+                request.NewValue,
+                request.UserId);
 
             var response = await _mediator.Send(query, ct);
 
@@ -81,10 +82,14 @@ namespace QDAO.Endpoint.Controllers
         }
 
 
-        [HttpPost("vote")]
-        public async Task<ActionResult> VoteForProposal([FromQuery] uint proposalId, [FromQuery] bool support, CancellationToken ct)
+        [HttpGet("vote")]
+        public async Task<ActionResult> VoteForProposal(
+            [FromQuery] int userId,
+            [FromQuery] long proposalId, 
+            [FromQuery] bool support,
+            CancellationToken ct)
         {
-            var query = new VoteProposal.Request(proposalId,support);
+            var query = new VoteProposal.Request(proposalId,support, userId);
             var response = await _mediator.Send(query, ct);
 
             return Ok(response);
@@ -113,6 +118,18 @@ namespace QDAO.Endpoint.Controllers
             var response = await _mediator.Send(query, ct);
 
             return Ok(response.Proposals);
+        }
+
+        [HttpGet("voting-info")]
+        public async Task<ActionResult> GetVotingProposalInfo(
+            [FromQuery] long proposalId,
+            CancellationToken ct)
+        {
+
+            var query = new GetVotingProposalInfoQuery.Request(proposalId);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
         }
     }
 }

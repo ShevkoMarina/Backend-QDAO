@@ -3,6 +3,7 @@ using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using QDAO.Application.Services;
 using QDAO.Domain;
+using QDAO.Persistence.Repositories.User;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -16,7 +17,8 @@ namespace QDAO.Application.Handlers.Proposal
             string Name,
             string Description,
             ProposalType Type,
-            long NewValue
+            int NewValue,
+            int UserId
             ) : IRequest<Response>;
 
         public record Response(RawTransaction RawTransaction);
@@ -25,17 +27,21 @@ namespace QDAO.Application.Handlers.Proposal
         {
             private readonly TransactionCreator _transactionService;
             private readonly ContractsManager _contractsManager;
+            private readonly UserRepository _userRepository;
 
             public Handler(
                 TransactionCreator transactionService,
+                UserRepository userRepository,
                 ContractsManager contractsManager)
             {
                 _transactionService = transactionService;
                 _contractsManager = contractsManager;
+                _userRepository = userRepository;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken ct)
             {
+                var userAccount = await _userRepository.GetUserAccountById(request.UserId, ct);
                 var callData = GetProposalCalldata(request.Type, request.NewValue);
 
                 var txMessage = new CreateProposalTransaction
@@ -47,7 +53,7 @@ namespace QDAO.Application.Handlers.Proposal
 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
 
-                var rawTx = await _transactionService.GetDefaultRawTransaction("0x618E0fFEe21406f493D22f9163c48E2D036de6B0");
+                var rawTx = await _transactionService.GetDefaultRawTransaction(userAccount);
 
                 rawTx.Data = dataHex;
 
@@ -55,6 +61,7 @@ namespace QDAO.Application.Handlers.Proposal
                 return new Response(rawTx);
             }
         }
+
 
         private static byte[] GetProposalCalldata(ProposalType proposalType, long newValue)
         {
@@ -77,7 +84,6 @@ namespace QDAO.Application.Handlers.Proposal
                     return updateQuorum.GetCallData();
             }
 
- 
             return Array.Empty<byte>();
         }
 

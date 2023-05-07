@@ -67,5 +67,7 @@ namespace QDAO.Persistence.Repositories.Proposal
 
             return proposals;
         }
+
+      
     }
 }
