@@ -3,11 +3,8 @@ using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using QDAO.Application.Services;
 using QDAO.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using QDAO.Persistence.Repositories.User;
 using System.Numerics;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,21 +12,27 @@ namespace QDAO.Application.Handlers.Proposal
 {
     public class QueueProposal
     {
-        public record Request(uint ProposalId, string Account) : IRequest<Response>;
+        public record Request(long ProposalId, int UserId) : IRequest<Response>;
 
         public record Response(RawTransaction Transaction);
 
         public class Handler : IRequestHandler<Request, Response>
         {
             private TransactionCreator _transactionService;
+            private readonly UserRepository _userRepository;
 
-            public Handler(TransactionCreator transactionService)
+            public Handler(
+                TransactionCreator transactionService,
+                UserRepository userRepository)
             {
                 _transactionService = transactionService;
+                _userRepository = userRepository;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
+                var userAccount = await _userRepository.GetUserAccountById(request.UserId, cancellationToken);
+
                 var txMessage = new QueueMessage
                 {
                     ProposalId = request.ProposalId,
@@ -37,7 +40,7 @@ namespace QDAO.Application.Handlers.Proposal
 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
 
-                var rawTx = await _transactionService.GetDefaultRawTransaction(request.Account);
+                var rawTx = await _transactionService.GetDefaultRawTransaction(userAccount);
 
                 rawTx.Data = dataHex;
 

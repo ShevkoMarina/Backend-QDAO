@@ -3,10 +3,10 @@ using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using QDAO.Application.Services;
 using QDAO.Domain;
+using QDAO.Persistence;
 using QDAO.Persistence.Repositories.User;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,41 +14,59 @@ namespace QDAO.Application.Handlers.DAO
 {
     public class AddPrincipalsQuery
     {
-        public record Request(int[] UserIds, short RequiredApprovals) : IRequest<Response>;
+        public record Request(int UserId, string PrincipalLogin, short RequiredApprovals) : IRequest<Response>;
 
         public record Response(RawTransaction Transaction);
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private readonly UserRepository _userRepository;
+            private readonly IDapperExecutor _database;
             private readonly TransactionCreator _transactionService;
+            private readonly UserRepository _userRepository;
 
-            public Handler(UserRepository userRepository)
+            public Handler(TransactionCreator transactionService, IDapperExecutor database, UserRepository userRepository)
             {
+                _transactionService = transactionService;
+                _database = database;
                 _userRepository = userRepository;
+
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                // бля из приложения надо по логину или по адресу делать запрос а не идентификатору
-                var users = await _userRepository.GetUsers(request.UserIds, cancellationToken);
+                var senderAddress = await _userRepository.GetUserAccountById(request.UserId, cancellationToken);
 
-                var userAddresses = users.Select(user => user.Address);
+                var userAddress = await _database.QuerySingleOrDefaultAsync<string>(
+                    GetUserByLogin,
+                    cancellationToken,
+                    new
+                    {
+                        login = request.PrincipalLogin
+                    });
+
+                if (userAddress == default)
+                {
+                    throw new ArgumentException("Пользователь не найден");
+                }
 
                 var txMessage = new AddPrincipalsTransaction
                 {
-                    Signers = userAddresses.ToList(),
+                    Signers = new List<string> { userAddress },
                     RequiredApprovals = request.RequiredApprovals
                 };
 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
 
-                var rawTx = await _transactionService.GetDefaultRawTransaction("0x618E0fFEe21406f493D22f9163c48E2D036de6B0");
+                var rawTx = await _transactionService.GetDefaultRawTransaction(senderAddress);
 
                 rawTx.Data = dataHex;
 
                 return new Response(rawTx);
             }
+
+            private const string GetUserByLogin = @"--GetUserByLogin
+                                                    select account from users where login = @login;";
+
         }
 
         [Function("createMultisig")]

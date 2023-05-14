@@ -71,11 +71,11 @@ namespace QDAO.Endpoint.Controllers
 
         [HttpPost("queue")]
         public async Task<ActionResult> QueueProposal(
-            [FromQuery] uint proposalId,
-            [FromQuery] string account,
+            [FromQuery] long proposalId,
+            [FromQuery] int userId,
             CancellationToken ct)
         {
-            var query = new QueueProposal.Request(proposalId, account);
+            var query = new QueueProposal.Request(proposalId, userId);
             var response = await _mediator.Send(query, ct);
 
             return Ok(response);
@@ -120,13 +120,31 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response.Proposals);
         }
 
-        [HttpGet("voting-info")]
-        public async Task<ActionResult> GetVotingProposalInfo(
+        [HttpGet("info")]
+        public async Task<ActionResult> GetProposalInfoById(
             [FromQuery] long proposalId,
             CancellationToken ct)
         {
 
-            var query = new GetVotingProposalInfoQuery.Request(proposalId);
+            var query = new GetProposalInfoById.Request(proposalId);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
+        }
+
+        [HttpGet("active")]
+        public async Task<ActionResult> GetProposalsActiveForVoting(CancellationToken ct)
+        {
+            var query = new GetProposalsActiveForVotingQuery.Request();
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
+        }
+
+        [HttpGet("promotion")]
+        public async Task<ActionResult> GetProposalsForPromotion(CancellationToken ct)
+        {
+            var query = new GetProposalsForPromotionQuery.Request();
             var response = await _mediator.Send(query, ct);
 
             return Ok(response);

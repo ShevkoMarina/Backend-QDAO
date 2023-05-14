@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.Admin;
 using QDAO.Application.Handlers.DAO;
 using QDAO.Endpoint.DTOs.qDAO;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,13 +46,15 @@ namespace QDAO.Endpoint.Controllers
             return Ok();
         }
 
-        [HttpPost("add-principals")]
+        [HttpGet("add-principal")]
         public async Task<ActionResult> AddPrincipals(
-            [FromQuery] int[] userIds,
-            [FromQuery] short requiredApprovals,
+            [FromQuery] [Required] string userLogin,
+            [FromQuery] [Required] short requiredApprovals,
+            [FromQuery] [Required] int senderId,
             CancellationToken ct)
         {
-            var query = new AddPrincipalsQuery.Request(userIds, requiredApprovals);
+            // todo: add validations
+            var query = new AddPrincipalsQuery.Request(senderId, userLogin, requiredApprovals);
 
             var response = await _mediator.Send(query, ct);
 

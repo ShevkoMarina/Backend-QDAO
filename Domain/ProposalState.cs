@@ -12,7 +12,7 @@ namespace QDAO.Domain
         Canceled = 1,
         Defeated = 2,
         NoQuorum = 3,
-        Succeeded = 3,
+        Succeeded = 4,
         Queued = 5,
         Expired = 6,
         Executed = 7
