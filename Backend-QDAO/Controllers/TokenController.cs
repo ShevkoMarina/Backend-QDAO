@@ -18,33 +18,28 @@ namespace QDAO.Endpoint.Controllers
         }
 
 
-        [HttpGet("balance")]
-        public async Task<ActionResult<long>> GetBalance([FromQuery] string signer, CancellationToken ct)
+        [HttpGet("user-info")]
+        public async Task<ActionResult<long>> GetUserTokenInfo(
+            [FromQuery] int userId,
+            CancellationToken ct)
         {
-            var query = new GetBalanceQuery.Request(signer);
+            var query = new GetBalanceQuery.Request(userId);
             var response = await _mediator.Send(query, ct);
 
-            return Ok(response.Balance);
-        }
-
-        [HttpGet("current-vote-weight")]
-        public async Task<ActionResult> GetCurrentVoteWeight([FromQuery] string address, CancellationToken ct)
-        {
-            var query = new GetBalanceQuery.Request(address);
-            var response = await _mediator.Send(query, ct);
-
-            return Ok(response.Balance);
+            return Ok(response);
         }
 
 
         [HttpGet("delegate")]
-        public async Task<ActionResult> Delegate([FromQuery] string delegatee, CancellationToken ct)
+        public async Task<ActionResult> Delegate(
+            [FromQuery] int userId,
+            [FromQuery] string delegateeLogin,
+            CancellationToken ct)
         {
-            var signer = "0xd3b8B391c21F9B2DF09a30a3C8B270227a49cC4D";
-            var query = new DelegateVotesQuery.Request(signer, delegatee);
+            var query = new DelegateVotesQuery.Request(userId, delegateeLogin);
             var response = await _mediator.Send(query, ct);
 
-            return Ok(response.TransactionData);
+            return Ok(response);
         }
 
         [HttpGet("transfer")]

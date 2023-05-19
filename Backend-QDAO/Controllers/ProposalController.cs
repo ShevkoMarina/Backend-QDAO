@@ -81,6 +81,18 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        [HttpPost("execute")]
+        public async Task<ActionResult> ExecuteProposal(
+            [FromQuery] long proposalId,
+            [FromQuery] int userId,
+            CancellationToken ct)
+        {
+            var query = new GetProposalExecutionTransactionQuery.Request(proposalId, userId);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
+        }
+
 
         [HttpGet("vote")]
         public async Task<ActionResult> VoteForProposal(
