@@ -20,7 +20,6 @@ namespace QDAO.Application.Handlers.Token
             private readonly ContractsManager _contractManager;
             private readonly UserRepository _userRepository;
 
-
             public Handler(ContractsManager contractsManager, UserRepository userRepository)
             {
                 _contractManager = contractsManager;
@@ -46,6 +45,8 @@ namespace QDAO.Application.Handlers.Token
                 var votes = await getVotesHandler.QueryAsync<long>(_contractManager.GetTokenAddress(), getVotesMessage);
 
 
+
+
                 return new Response(balance, votes);
             }
         }
@@ -64,4 +65,7 @@ namespace QDAO.Application.Handlers.Token
         [Parameter("address", "account", 1)]
         public string Account { get; set; }
     }
+
+    [Function("totalSupply", "uint256")]
+    public class GetTotalSupplyMessage : FunctionMessage { }
 }

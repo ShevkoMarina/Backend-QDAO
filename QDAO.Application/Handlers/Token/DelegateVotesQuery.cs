@@ -17,26 +17,18 @@ namespace QDAO.Application.Handlers.Token
         public class Handler : IRequestHandler<Request, RawTransaction>
         {
             private readonly TransactionCreator _transactionCreator;
-            private readonly IDapperExecutor _database;
             private readonly UserRepository _userRepository;
 
-            public Handler(TransactionCreator transactionCreator, IDapperExecutor database, UserRepository userRepository)
+            public Handler(TransactionCreator transactionCreator, UserRepository userRepository)
             {
                 _transactionCreator = transactionCreator;
-                _database = database;
                 _userRepository = userRepository;
             }
 
             public async Task<RawTransaction> Handle(Request request, CancellationToken cancellationToken)
             {
 
-                var delegateeAccount = await _database.QuerySingleOrDefaultAsync<string>(
-                    GetUserAccountByLogin,
-                    cancellationToken,
-                    new
-                    {
-                        login = request.DelegateeLogin
-                    });
+                var delegateeAccount = await _userRepository.GetUserAccountByLogin(request.DelegateeLogin, cancellationToken);
 
                 var userAccount = await _userRepository.GetUserAccountById(request.UserId, cancellationToken);
 

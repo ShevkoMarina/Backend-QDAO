@@ -3,6 +3,7 @@ using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using QDAO.Application.Services;
 using QDAO.Domain;
+using QDAO.Persistence.Repositories.User;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,13 +11,14 @@ namespace QDAO.Application.Handlers.Token
 {
     public class TransferTokensQuery
     {
-        public record Request(string Signer, string DstAccount, uint RowAmount) : IRequest<Response>;
+        public record Request(int UserId, string DelegateeLogin, long RowAmount) : IRequest<Response>;
 
         public record Response(RawTransaction TransactionData);
 
         public class Handler : IRequestHandler<Request, Response>
         {
             private readonly TransactionCreator _transactionCreator;
+            private readonly UserRepository _userRepository;
 
             public Handler(TransactionCreator transactionCreator)
             {
@@ -25,15 +27,18 @@ namespace QDAO.Application.Handlers.Token
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
+                var delegateeAccount = await _userRepository.GetUserAccountByLogin(request.DelegateeLogin, cancellationToken);
+                var userAccount = await _userRepository.GetUserAccountById(request.UserId, cancellationToken);
+
                 var txMessage = new TransferTokensMessage
                 {
-                    DstAccount = request.DstAccount,
+                    DstAccount = delegateeAccount,
                     RowAmount = request.RowAmount
                 };
 
 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
-                var transaction = await _transactionCreator.GetDefaultRawTransaction(request.Signer);
+                var transaction = await _transactionCreator.GetDefaultRawTransaction(userAccount);
                 transaction.Data = dataHex;
 
                 return new Response(transaction);
@@ -46,7 +51,7 @@ namespace QDAO.Application.Handlers.Token
                 public string DstAccount { get; set; }
 
                 [Parameter("uint256", "rawAmount", 2)]
-                public uint RowAmount { get; set; }
+                public long RowAmount { get; set; }
             }
         }
     }

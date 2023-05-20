@@ -42,17 +42,27 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+
         [HttpGet("transfer")]
         public async Task<ActionResult> Transfer(
-            [FromQuery] string dstAccount,
-            [FromQuery] uint amount,
+            [FromQuery] int userId,
+            [FromQuery] string delefateeLogin,
+            [FromQuery] long amount,
             CancellationToken ct)
         {
-            var signer = "0xd3b8B391c21F9B2DF09a30a3C8B270227a49cC4D";
-            var query = new TransferTokensQuery.Request(signer, dstAccount, amount);
+            var query = new TransferTokensQuery.Request(userId, delefateeLogin, amount);
             var response = await _mediator.Send(query, ct);
 
             return Ok(response.TransactionData);
+        }
+
+        [HttpGet("total")]
+        public async Task<ActionResult> GetTotalSupply(CancellationToken ct)
+        {
+            var query = new GetTotalSupplyQuery.Request();
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
         }
     }
 }
