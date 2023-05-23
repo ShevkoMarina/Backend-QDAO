@@ -15,17 +15,15 @@
                                     password,
                                     account as address,
                                     role
-                                    from users where id = any(@userIds) ;";
+                                    from users where id = @userId ;";
 
         internal const string GetUserAccontById = @"--UserSql.GetUserAccountById
                                                     select account from users where id = @userId";
 
-        internal const string GetByLoginAndPassword = @"--UserSql.GetByLoginAndPassword
-                                    select 
-                                    id,
-                                    account,
-                                    role
-                                    from users where login = @login and password = @password;";
-    
+      
+        internal const string GetUserAccountByLogin = @"--GetUserAccountByLogin
+                                                        select account from users
+                                                        where login = @login;";
+
     }
 }

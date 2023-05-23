@@ -28,12 +28,7 @@ namespace QDAO.Endpoint.Controllers
             var query = new AuthorizeUserQuery.Request(request.Login, request.Password);
             var response = await _mediator.Send(query, ct);
 
-            return Ok(new AuthorizeUserResponseDto 
-            { 
-                UserId = response.User.UserId,
-                Role = response.User.Role,
-                Account = response.User.Account
-            });
+            return Ok(response);
         }
 
 

@@ -41,19 +41,19 @@ namespace QDAO.Persistence.Repositories.User
             return userId;
         }
 
-        public async Task<IReadOnlyCollection<Domain.User>> GetUsers(
-            int[] userIds,
+        public async Task<Domain.User> GetUserById(
+            int userId,
             CancellationToken ct)
         {
-            var users = await _database.QueryAsync<Domain.User>(
+            var user = await _database.QuerySingleOrDefaultAsync<Domain.User>(
                 UserSql.GetByIds,
                 ct,
                 new
                 {
-                    userIds = userIds
+                    userId = userId
                 });
 
-            return users;
+            return user;
         }
 
         public async Task<string> GetUserAccountById(
@@ -71,25 +71,11 @@ namespace QDAO.Persistence.Repositories.User
             return account;
         }
 
-        public async Task<UserInfoDto> AuthorizeUser(string login, string password, CancellationToken ct)
-        {
-            var user = await _database.QuerySingleOrDefaultAsync<UserInfoDto>(
-                UserSql.GetByLoginAndPassword,
-                ct,
-                new
-                {
-                    login = login,
-                    password = password
-                });
-
-
-            return user;
-        }
 
         public async Task<string> GetUserAccountByLogin(string login, CancellationToken ct)
         {
             var delegateeAccount = await _database.QuerySingleOrDefaultAsync<string>(
-                   GetUserAccountByLogin,
+                   UserSql.GetUserAccountByLogin,
                    ct,
                    new
                    {

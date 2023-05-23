@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace QDAO.Application.Handlers.Token
 {
-    public class GetBalanceQuery
+    public class GetUserTokenInfo
     {
         public record Request(int UserId) : IRequest<Response>;
         public record Response(long Balance, long Votes);
@@ -44,9 +44,6 @@ namespace QDAO.Application.Handlers.Token
                 var getVotesHandler = _contractManager.Web3.Eth.GetContractQueryHandler<GetVotesMessage>();
                 var votes = await getVotesHandler.QueryAsync<long>(_contractManager.GetTokenAddress(), getVotesMessage);
 
-
-
-
                 return new Response(balance, votes);
             }
         }
@@ -65,7 +62,4 @@ namespace QDAO.Application.Handlers.Token
         [Parameter("address", "account", 1)]
         public string Account { get; set; }
     }
-
-    [Function("totalSupply", "uint256")]
-    public class GetTotalSupplyMessage : FunctionMessage { }
 }

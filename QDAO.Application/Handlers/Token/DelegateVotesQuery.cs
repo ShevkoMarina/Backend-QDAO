@@ -3,7 +3,6 @@ using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using QDAO.Application.Services;
 using QDAO.Domain;
-using QDAO.Persistence;
 using QDAO.Persistence.Repositories.User;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,9 +44,6 @@ namespace QDAO.Application.Handlers.Token
                 transaction.Data = dataHex;
                 return transaction;
             }
-
-            private const string GetUserAccountByLogin = @"select account from users where login = @login;";
-
         }
     }
 

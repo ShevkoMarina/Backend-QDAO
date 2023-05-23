@@ -4,6 +4,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using QDAO.Application.Services.DTOs.Security;
 using Microsoft.IdentityModel.Tokens;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace QDAO.Application.Services
 {
@@ -16,11 +19,12 @@ namespace QDAO.Application.Services
             _userRepository = userRepository;
         }
 
-        public string GetAccessToken(Domain.User user)
+        public async Task<string> GetAccessToken(long userId, short userRole, CancellationToken ct)
         {
+           
             var userIdentity = new ClaimsIdentity();
-            userIdentity.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, user.Id.ToString()));
-            userIdentity.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.ToString()));
+            userIdentity.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, userId.ToString()));
+            userIdentity.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole.ToString()));
 
             var encodedJwt = CreateJwt(userIdentity);
 

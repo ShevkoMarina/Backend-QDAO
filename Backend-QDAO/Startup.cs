@@ -27,6 +27,7 @@ namespace QDAO.Endpoint
 
             services.AddScoped<TransactionCreator>();
             services.AddScoped<ContractsManager>();
+            services.AddScoped<SecurityService>();
 
 
             services.AddScoped<ProposalGrpcClient>();
