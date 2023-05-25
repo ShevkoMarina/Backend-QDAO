@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QDAO.Persistence.Repositories.Proposal
+﻿namespace QDAO.Persistence.Repositories.Proposal
 {
     internal static class ProposalSql
     {
         internal const string Add = @"--ProposalSql.Add
                                       insert into proposal
-                                      (id, start_block, end_block, proposer_id) 
-                                      values(@id, @start_block, @end_block, @proposer_id)";
+                                      (id, start_block, end_block, proposer_id, description, name) 
+                                      values(@id, @start_block, @end_block, @proposer_id, @description, @name)";
 
 
 

@@ -33,7 +33,7 @@ namespace QDAO.Application.Handlers.Transaction
                 var txHash = await _contractdManager.Web3.Eth.Transactions.SendRawTransaction.SendRequestAsync(request.TxData);
                
                 using var connection = await _database.OpenConnectionAsync(ct);
-                await _transactionRepository.SaveTransaction(request.TxData, connection, ct);
+                await _transactionRepository.SaveTransaction(txHash, connection, ct);
 
                 return new Response(txHash);
             }

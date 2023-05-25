@@ -39,18 +39,6 @@ namespace QDAO.Endpoint.Controllers
         }
 
 
-        [HttpGet("{proposalId::long}")]
-        public async Task<ActionResult<Proposal>> GetProposalById(
-            [FromRoute] long proposalId,
-            CancellationToken ct)
-        {
-            var query = new GetProposalByIdQuery.Request(proposalId);
-            var response = await _mediator.Send(query, ct);
-
-            return Ok(response.Proposal);
-        }
-
-
         [HttpPost("create")]
         public async Task<ActionResult<RawTransaction>> CreateProposal(
             [FromBody] CreateProposalDto request,
@@ -60,9 +48,9 @@ namespace QDAO.Endpoint.Controllers
                 request.Name,
                 request.Description,
                 ProposalType.UpdateVotingPeriod, 
-                request.NewValue,
-                request.UserId);
-
+                request.UserId,
+                request.NewValue);
+            
             var response = await _mediator.Send(query, ct);
 
             return Ok(response.RawTransaction);

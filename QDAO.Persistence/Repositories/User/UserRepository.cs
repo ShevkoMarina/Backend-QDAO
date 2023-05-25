@@ -84,5 +84,18 @@ namespace QDAO.Persistence.Repositories.User
 
             return delegateeAccount;
         }
+
+        public async Task<int> GetUserIdByAccount(string account, CancellationToken ct)
+        {
+            var userId = await _database.QuerySingleOrDefaultAsync<int>(
+               UserSql.GetUserIdByAccount,
+               ct,
+               new
+               {
+                   account = account
+               });
+
+            return userId;
+        }
     }
 }

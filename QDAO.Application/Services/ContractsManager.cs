@@ -13,7 +13,7 @@ namespace QDAO.Application.Services
         }
 
  
-        private string _delegator = "0x45D18E0D7172d550505b61B6C86919C3c6e6c129";
+        private string _delegator = "0x283e148550026d0262800eD7Bd7d193E841fa1Da";
 
         public string GetGovernorDelegator()
         {
@@ -22,12 +22,17 @@ namespace QDAO.Application.Services
 
         public string GetTimelockAddress()
         {
-            return "0x4Bdd7222e70b2a9D8396A082BfE41970Ff37De4D";
+            return "0xE7929311DDD6e02734519ea3Beb31b900693E37F";
         }
 
         public string GetTokenAddress()
         {
-            return "0x0fef7931488416C57974E232D749bC36dda3C258";
+            return "0xa42C9413eeaD0A194174A99C0d2c554914708289";
+        }
+
+        public string GetMultisigAddress()
+        {
+            return "0xA6fE4cE54D2ac02618060842ccA41aAFd2a0Cf95";
         }
     }
 }

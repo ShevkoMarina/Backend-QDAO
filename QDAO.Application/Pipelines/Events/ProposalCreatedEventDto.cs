@@ -1,7 +1,6 @@
 ﻿using Nethereum.ABI.FunctionEncoding.Attributes;
 using System.Collections.Generic;
 
-// исравить сборку
 namespace QDAO.Application.Services.DTOs.Events
 {
     [Event("ProposalCreated")]
@@ -17,7 +16,7 @@ namespace QDAO.Application.Services.DTOs.Events
         public List<string> Targets { get; set; }
 
         [Parameter("uint[]", "values", 4)]
-        public List<uint> Values{ get; set; }
+        public List<uint> Values { get; set; }
 
         [Parameter("bytes[]", "calldatas", 5)]
         public List<byte[]> Calldatas { get; set; }
@@ -27,5 +26,11 @@ namespace QDAO.Application.Services.DTOs.Events
 
         [Parameter("uint256", "endBlock", 7)]
         public uint EndBlock { get; set; }
+
+        [Parameter("string", "name", 7)]
+        public string Name { get; set; }
+
+        [Parameter("string", "description", 8)]
+        public string Description { get; set; }
     }
 }

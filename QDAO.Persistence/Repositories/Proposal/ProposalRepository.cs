@@ -31,6 +31,8 @@ namespace QDAO.Persistence.Repositories.Proposal
                            start_block = (long)proposal.VotingInterval.StartBlock,
                            end_block = (long)proposal.VotingInterval.EndBlock,
                            proposer_id = (long)proposal.Proposer,
+                           description = proposal.Description,
+                           name = proposal.Name
                        }
                    );
             }

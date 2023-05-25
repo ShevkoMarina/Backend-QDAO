@@ -17,7 +17,8 @@ namespace QDAO.Application.Services
 
         private async Task<int> GetCurrentNonce(string accountAddress)
         {
-            var currentNonce = await _contractsManager.Web3.Eth.Transactions.GetTransactionCount.SendRequestAsync(accountAddress, BlockParameter.CreatePending());
+            var currentNonce = await _contractsManager.Web3.Eth.Transactions
+                .GetTransactionCount.SendRequestAsync(accountAddress, BlockParameter.CreatePending());
 
             return (int)currentNonce.Value;
         }

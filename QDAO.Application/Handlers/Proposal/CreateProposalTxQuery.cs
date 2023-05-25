@@ -17,8 +17,8 @@ namespace QDAO.Application.Handlers.Proposal
             string Name,
             string Description,
             ProposalType Type,
-            int NewValue,
-            int UserId
+            int UserId,
+            int NewValue
             ) : IRequest<Response>;
 
         public record Response(RawTransaction RawTransaction);
@@ -48,7 +48,9 @@ namespace QDAO.Application.Handlers.Proposal
                 {
                     CalldatasForTx = new List<byte[]> { callData },
                     Values = new List<long>() { 0 },
-                    Targets = new List<string>() { _contractsManager.GetGovernorDelegator() }
+                    Targets = new List<string>() { _contractsManager.GetGovernorDelegator() },
+                    Description = request.Description,
+                    Name = request.Name
                 };
 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
@@ -76,7 +78,7 @@ namespace QDAO.Application.Handlers.Proposal
 
                     return updateVotingMessage.GetCallData();
                 case ProposalType.UpdateQuorum:
-                    var updateQuorum = new UpdateVotingPeriodTransaction // todo
+                    var updateQuorum = new UpdateQuorumMessage 
                     {
                         NewValue = newValue
                     };
@@ -98,11 +100,23 @@ namespace QDAO.Application.Handlers.Proposal
             public List<long> Values { get; set; } 
             [Parameter("bytes[]", "calldatas", 3)]
             public List<byte[]> CalldatasForTx { get; set; }
+            [Parameter("string", "name", 4)]
+            public string Name { get; set; }
+
+            [Parameter("string", "description", 5)]
+            public string Description { get; set; }
         }
 
 
         [Function("updateVotingPeriod")]
         public class UpdateVotingPeriodTransaction : FunctionMessage
+        {
+            [Parameter("uint256", "_newValue", 1)]
+            public virtual long NewValue { get; set; }
+        }
+
+        [Function("updateQuorum")]
+        public class UpdateQuorumMessage : FunctionMessage
         {
             [Parameter("uint256", "_newValue", 1)]
             public virtual long NewValue { get; set; }

@@ -34,5 +34,30 @@ namespace QDAO.Persistence.Repositories.Transaction
 
             return queueId;
         }
+
+        public async Task SetProcessed(long queueId, DbConnection connection)
+        {
+            await _database.ExecuteAsync(
+                TransactionSql.SetProccessed,
+                connection,
+                CancellationToken.None,
+                new
+                {
+                    queue_id = queueId
+                });
+        }
+
+
+        public async Task SetFailed(long queueId, DbConnection connection)
+        {
+            await _database.ExecuteAsync(
+                TransactionSql.SetFailed,
+                connection,
+                CancellationToken.None,
+                new
+                {
+                    queue_id = queueId
+                });
+        }
     }
 }

@@ -20,7 +20,10 @@
         internal const string GetUserAccontById = @"--UserSql.GetUserAccountById
                                                     select account from users where id = @userId";
 
-      
+        internal const string GetUserIdByAccount = @"--UserSql.GetUserIdByAccount
+                                                    select id from users where account = @account";
+
+
         internal const string GetUserAccountByLogin = @"--GetUserAccountByLogin
                                                         select account from users
                                                         where login = @login;";

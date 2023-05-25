@@ -41,7 +41,7 @@ namespace QDAO.Endpoint
             services.AddScoped<TransactionEventsDecoder>();
          
 
-   //         services.AddHostedService<EventsProcessingBgService>();
+            services.AddHostedService<EventsProcessingBgService>();
             services.AddScoped<EventsProcessingPipeline>();
 
             services.AddScoped<ProposalQrisisQueueRepository>();

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace QDAO.Application.Handlers.DAO
 {
-    public class AddPrincipalsQuery
+    public class AddPrincipalQuery
     {
         public record Request(int UserId, string PrincipalLogin, short RequiredApprovals) : IRequest<Response>;
 
@@ -51,7 +51,7 @@ namespace QDAO.Application.Handlers.DAO
 
                 var txMessage = new AddPrincipalsTransaction
                 {
-                    Signers = new List<string> { userAddress },
+                    PrincipalAccount = userAddress,
                     RequiredApprovals = request.RequiredApprovals
                 };
 
@@ -69,13 +69,13 @@ namespace QDAO.Application.Handlers.DAO
 
         }
 
-        [Function("createMultisig")]
+        [Function("addPrincipal")]
         public class AddPrincipalsTransaction : FunctionMessage
         {
-            [Parameter("address[]", "signers", 1)]
-            public List<string> Signers { get; set; }
+            [Parameter("address", "_principal", 1)]
+            public string PrincipalAccount { get; set; }
 
-            [Parameter("uint8", "requiredApprovals", 2)]
+            [Parameter("uint8", "_requiredApprovals", 2)]
             public short RequiredApprovals { get; set; }
         }
     }

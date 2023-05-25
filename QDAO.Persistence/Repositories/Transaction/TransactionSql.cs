@@ -18,5 +18,17 @@ namespace QDAO.Persistence.Repositories.Transaction
                                           where state = 0
                                           order by created_at
                                           limit 1";
+
+        internal const string SetProccessed = @"update transactions_queue 
+                                                set
+                                                state = 1,
+                                                processed_at = now()
+                                                where id = @queue_id;";
+
+        internal const string SetFailed = @"update transactions_queue 
+                                            set
+                                            state = 2,
+                                            processed_at = now()
+                                            where id = @queue_id;";
     }
 }
