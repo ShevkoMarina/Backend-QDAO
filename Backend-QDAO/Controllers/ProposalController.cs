@@ -110,7 +110,7 @@ namespace QDAO.Endpoint.Controllers
 
         [HttpGet("get-by-user")]
         public async Task<ActionResult<IReadOnlyCollection<ProposalThin>>> GetProposalsByUserId(
-            [FromQuery] long userId,
+            [FromQuery] int userId,
             CancellationToken ct)        {
             // можно мониторить переходы по статусам и алертить если что то пошло не так
 

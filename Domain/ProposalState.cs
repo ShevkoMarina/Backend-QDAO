@@ -8,13 +8,13 @@ namespace QDAO.Domain
 {
     public enum ProposalState : short
     {
-        Active = 0,
-        Canceled = 1,
-        Defeated = 2,
-        NoQuorum = 3,
-        Succeeded = 4,
-        Queued = 5,
-        Expired = 6,
+        Pending = 0,
+        Active = 1,
+        Canceled = 2,
+        Defeated = 3,
+        NoQuorum = 4,
+        Succeeded = 5,
+        Queued = 6,
         Executed = 7
     }
 }

@@ -44,6 +44,9 @@ namespace QDAO.Endpoint
             services.AddHostedService<EventsProcessingBgService>();
             services.AddScoped<EventsProcessingPipeline>();
 
+            services.AddHostedService<ProposalReadyForVotingBgService>();
+            services.AddScoped<ProposalStateTransitionPipeline>();
+
             services.AddScoped<ProposalQrisisQueueRepository>();
             services.AddSingleton<IDapperExecutor, DapperExecutor>();
 

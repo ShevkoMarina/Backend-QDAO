@@ -62,6 +62,7 @@ namespace QDAO.Application.Pipelines
 
                 using var connection = await _database.OpenConnectionAsync(stoppingToken);
 
+        
                 // Transaction failed
                 if (receipt.Status.Value == 0)
                 {

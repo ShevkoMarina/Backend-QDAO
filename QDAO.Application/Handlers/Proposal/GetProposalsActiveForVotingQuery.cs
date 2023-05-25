@@ -44,7 +44,7 @@ namespace QDAO.Application.Handlers.Proposal
                                                                       order by psl.created_at DESC NULLS LAST
                                                                       limit 1
                                                                       ) AS proposal_state on true
-                                                                    where proposal_state.state = 0;";
+                                                                    where proposal_state.state = 1;";
         }
     }
 }

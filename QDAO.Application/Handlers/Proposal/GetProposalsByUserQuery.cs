@@ -13,7 +13,7 @@ namespace QDAO.Application.Handlers.Proposal
 {
     public class GetProposalsByUserQuery
     {
-        public record Request(long UserId) : IRequest<Response>;
+        public record Request(int UserId) : IRequest<Response>;
         public record Response(IReadOnlyCollection<ProposalThin> Proposals);
 
         public class Handler : IRequestHandler<Request, Response>
