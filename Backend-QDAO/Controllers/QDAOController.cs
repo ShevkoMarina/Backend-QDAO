@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.Admin;
 using QDAO.Application.Handlers.DAO;
 using QDAO.Application.Handlers.Proposal;
+using QDAO.Application.Handlers.Token;
 using QDAO.Endpoint.DTOs.qDAO;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
@@ -69,6 +70,19 @@ namespace QDAO.Endpoint.Controllers
             var response = await _mediator.Send(query, ct);
 
             return Ok(response);
+        }
+
+        [HttpGet("transfer-tokens")]
+        public async Task<ActionResult> Transfer(
+            [FromQuery] int userId,
+            [FromQuery] string delefateeLogin,
+            [FromQuery] long amount,
+            CancellationToken ct)
+        {
+            var query = new TransferTokensQuery.Request(userId, delefateeLogin, amount);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response.TransactionData);
         }
     }
 }

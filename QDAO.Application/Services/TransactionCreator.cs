@@ -25,12 +25,21 @@ namespace QDAO.Application.Services
 
         public async Task<RawTransaction> GetDefaultRawTransaction(string senderAddress)
         {
-        
             var nonce = await GetCurrentNonce(senderAddress);
             return new RawTransaction
             {
                 Nonce = nonce,
                 AddressTo = _contractsManager.GetGovernorDelegator(),
+            };
+        }
+
+        public async Task<RawTransaction> GetDefaultTokenTransaction(string senderAddress)
+        {
+            var nonce = await GetCurrentNonce(senderAddress);
+            return new RawTransaction
+            {
+                Nonce = nonce,
+                AddressTo = _contractsManager.GetTokenAddress(),
             };
         }
     }

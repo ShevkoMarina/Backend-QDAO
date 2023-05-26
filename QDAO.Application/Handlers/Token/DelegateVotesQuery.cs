@@ -39,7 +39,7 @@ namespace QDAO.Application.Handlers.Token
                 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
 
-                var transaction = await _transactionCreator.GetDefaultRawTransaction(userAccount);
+                var transaction = await _transactionCreator.GetDefaultTokenTransaction(userAccount);
 
                 transaction.Data = dataHex;
                 return transaction;

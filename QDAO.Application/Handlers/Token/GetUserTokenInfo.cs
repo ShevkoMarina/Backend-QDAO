@@ -12,7 +12,7 @@ namespace QDAO.Application.Handlers.Token
     public class GetUserTokenInfo
     {
         public record Request(int UserId) : IRequest<Response>;
-        public record Response(long Balance, long Votes);
+        public record Response(long Balance, long Weight);
 
 
         public class Handler : IRequestHandler<Request, Response>
