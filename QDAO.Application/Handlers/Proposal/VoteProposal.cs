@@ -12,11 +12,9 @@ namespace QDAO.Application.Handlers.Proposal
 {
     public class VoteProposal 
     {
-        public record Request(long ProposalId, bool Support, int UserId) : IRequest<Response>;
+        public record Request(long ProposalId, bool Support, int UserId) : IRequest<RawTransaction>;
 
-        public record Response(RawTransaction Transaction);
-
-        public class Handler : IRequestHandler<Request, Response>
+        public class Handler : IRequestHandler<Request, RawTransaction>
         {
             private readonly TransactionCreator _transactionService;
             private readonly UserRepository _userRepository;
@@ -29,7 +27,7 @@ namespace QDAO.Application.Handlers.Proposal
                 _userRepository = userRepository;
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken ct)
+            public async Task<RawTransaction> Handle(Request request, CancellationToken ct)
             {
                 var userAccount = await _userRepository.GetUserAccountById(request.UserId, ct);
 
@@ -46,8 +44,7 @@ namespace QDAO.Application.Handlers.Proposal
 
                 rawTx.Data = dataHex;
 
-
-                return new Response(rawTx);
+                return rawTx;
             }
         }
     }

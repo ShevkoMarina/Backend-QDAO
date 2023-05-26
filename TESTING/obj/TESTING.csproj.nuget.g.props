@@ -15,4 +15,7 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgNethereum_Autogen_ContractApi Condition=" '$(PkgNethereum_Autogen_ContractApi)' == '' ">C:\Users\User\.nuget\packages\nethereum.autogen.contractapi\4.11.0</PkgNethereum_Autogen_ContractApi>
+  </PropertyGroup>
 </Project>

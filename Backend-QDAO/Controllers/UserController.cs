@@ -41,5 +41,16 @@ namespace QDAO.Endpoint.Controllers
 
             return Ok();
         }
+
+        [HttpPost("init-admin")]
+        public async Task<ActionResult> InitAdmin(
+            [FromBody] AddUserDto request,
+            CancellationToken ct)
+        {
+            var query = new AddAdminCommand.Request(request.Login, request.Password, request.Account);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok();
+        }
     }
 }

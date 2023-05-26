@@ -28,13 +28,35 @@ namespace QDAO.Persistence.Repositories.Proposal
                        new
                        {
                            id = (long)proposal.Id,
-                           start_block = (long)proposal.VotingInterval.StartBlock,
-                           end_block = (long)proposal.VotingInterval.EndBlock,
                            proposer_id = (long)proposal.Proposer,
                            description = proposal.Description,
                            name = proposal.Name
                        }
                    );
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async Task InsertVotingInfo(Domain.Proposal proposal, DbConnection connection, CancellationToken ct)
+        {
+            try
+            {
+                await _database.ExecuteAsync(
+                      ProposalSql.InsertVotingInfo,
+                      connection,
+                      ct,
+                      new
+                      {
+                          proposal_id = (long)proposal.Id,
+                          start_block = (long)proposal.VotingInterval.StartBlock,
+                          end_block = (long)proposal.VotingInterval.EndBlock,
+                          votes_for = (long)proposal.ForVotes,
+                          votes_against = (long)proposal.AgainstVotes
+                      }
+                  );
             }
             catch (Exception ex)
             {

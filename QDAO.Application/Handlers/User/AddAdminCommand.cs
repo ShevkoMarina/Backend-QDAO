@@ -9,37 +9,40 @@ namespace QDAO.Application.Handlers.User
 {
     public class AddAdminCommand
     {
-        public record Request(string login, string password, string account) : IRequest<Response>;
+        public record Request(string Login, string Password, string Account) : IRequest;
 
-        public record Response(long UserId);
-
-        public class Handler : IRequestHandler<Request, Response>
+        public class Handler : IRequestHandler<Request, Unit>
         {
-            private readonly UserRepository _repository;
             private readonly IDapperExecutor _database;
 
-            public Handler(IDapperExecutor database, UserRepository userRepository)
+            public Handler(IDapperExecutor database)
             {
-                _repository = userRepository;
                 _database = database;
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
             {
                 var connection = await _database.OpenConnectionAsync(cancellationToken);
 
-                // Добавить проверку что админ уже есть
-
-                var userId = await _repository.AddUser(
-                    request.login,
-                    request.password,
-                    request.account,
-                    Roles.Admin,
+                await _database.ExecuteAsync(
+                    UpdateAdminAccount,
                     connection,
-                    cancellationToken);
+                    cancellationToken,
+                    new
+                    {
+                        account = request.Account,
+                        password = request.Password,
+                        login = request.Login
+                    });
 
-                return new Response(userId);
+                return new Unit();
             }
+
+            private const string UpdateAdminAccount = @"update users set 
+                                                        account = @account,
+                                                        login = @login,
+                                                        password = @password
+                                                        where role = 3;";
         }
     }
 }

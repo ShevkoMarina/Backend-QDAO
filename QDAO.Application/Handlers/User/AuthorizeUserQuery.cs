@@ -27,8 +27,6 @@ namespace QDAO.Application.Handlers.User
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                // var user = await _repository.AuthorizeUser(request.Login, request.Password, cancellationToken);
-
                 var user = await _database.QuerySingleOrDefaultAsync<UserInfoDto>(
                 GetByLoginAndPassword,
                 cancellationToken,

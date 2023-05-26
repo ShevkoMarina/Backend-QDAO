@@ -4,8 +4,8 @@
     {
         internal const string Add = @"--ProposalSql.Add
                                       insert into proposal
-                                      (id, start_block, end_block, proposer_id, description, name) 
-                                      values(@id, @start_block, @end_block, @proposer_id, @description, @name)";
+                                      (id, proposer_id, description, name) 
+                                      values(@id, @proposer_id, @description, @name)";
 
 
 
@@ -13,6 +13,10 @@
                                             insert into proposal_state_log
                                             (proposal_id, state) 
                                             values(@proposal_id, @state)";
+
+        internal const string InsertVotingInfo = @"insert into voting 
+                                            (proposal_id, start_block, end_block, votes_for, votes_against)
+                                            values (@proposal_id, @start_block, @end_block, @votes_for, @votes_against)";
 
 
         internal const string GetByProposer = @"--ProposalSql.GetByProposer

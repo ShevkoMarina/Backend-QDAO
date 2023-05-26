@@ -57,9 +57,10 @@ namespace QDAO.Application.Pipelines
         private const string GetOldestCreatedProposal = @"--GetOldestCreatedProposal
                                                             select
                                                             id as Id,
-                                                            start_block as StartBlock,
-                                                            end_block as EndBlock
+                                                            v.start_block as StartBlock,
+                                                            v.end_block as EndBlock
                                                             from proposal p
+                                                            join voting v on p.id = v.proposal_id
                                                             join lateral (
                                                                 select state, created_at
                                                                 from proposal_state_log psl
@@ -68,8 +69,8 @@ namespace QDAO.Application.Pipelines
                                                                 limit 1
                                                                 ) AS proposal_state on true
                                                             where proposal_state.state = 0
-                                                            order by p.start_block
-                                                            limit 1;";
+                                                            order by v.start_block
+                                                            limit 1";
 
         public class ProposalVotingPeriodInfo
         {

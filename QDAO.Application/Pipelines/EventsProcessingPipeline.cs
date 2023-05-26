@@ -99,11 +99,21 @@ namespace QDAO.Application.Pipelines
             try
             {
                 var userId = await _userRepository.GetUserIdByAccount(proposalCreationEvent.Proposer, stoppingToken);
+                var proposal = new Domain.Proposal() // todo сделать рекордом
+                { 
+                    Id = proposalCreationEvent.Id,
+                    Name = proposalCreationEvent.Name,
+                    Description = proposalCreationEvent.Description,
+                    Proposer = userId,
+                    VotingInterval = new VotingInterval(proposalCreationEvent.StartBlock, proposalCreationEvent.EndBlock),
+                    ForVotes = 0,
+                    AgainstVotes = 0
+                };
+
                 await _proposalRepository.SaveProposal(
                     new Domain.Proposal
                     {
                         Id = proposalCreationEvent.Id,
-                        VotingInterval = new VotingInterval(proposalCreationEvent.StartBlock, proposalCreationEvent.EndBlock),
                         Proposer = userId,
                         Description = proposalCreationEvent.Description,
                         Name = "Преложение " + proposalCreationEvent.Id + ": " + proposalCreationEvent.Name
@@ -117,12 +127,14 @@ namespace QDAO.Application.Pipelines
                     connection,
                     stoppingToken);
 
+                await _proposalRepository.InsertVotingInfo(proposal, connection, stoppingToken);
+
                 await transaction.CommitAsync(); // проверить что нужен асинк
             }
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-            }
+             }
         }
 
         private async Task HandleProposalQueueEvent(ProposalQueuedEventDto proposalQueueEvent, CancellationToken stoppingToken)
