@@ -84,6 +84,12 @@ namespace QDAO.Application.Handlers.Proposal
                     };
 
                     return updateQuorum.GetCallData();
+                case ProposalType.UpdateVotingDelay:
+                    var updateVotingDelay = new UpdateVotingDelayMessage
+                    {
+                        NewValue = newValue
+                    };
+                    return updateVotingDelay.GetCallData();
             }
 
             return Array.Empty<byte>();
@@ -117,6 +123,13 @@ namespace QDAO.Application.Handlers.Proposal
 
         [Function("updateQuorum")]
         public class UpdateQuorumMessage : FunctionMessage
+        {
+            [Parameter("uint256", "_newValue", 1)]
+            public virtual long NewValue { get; set; }
+        }
+
+        [Function("updateVotingDelay")]
+        public class UpdateVotingDelayMessage : FunctionMessage
         {
             [Parameter("uint256", "_newValue", 1)]
             public virtual long NewValue { get; set; }

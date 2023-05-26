@@ -112,7 +112,7 @@ namespace QDAO.Application.Pipelines
                     stoppingToken);
 
                 await _proposalRepository.InsertState(
-                    ProposalState.Active,
+                    ProposalState.Pending,
                     proposalCreationEvent.Id,
                     connection,
                     stoppingToken);

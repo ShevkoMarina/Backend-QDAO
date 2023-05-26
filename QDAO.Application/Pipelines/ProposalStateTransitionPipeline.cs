@@ -42,7 +42,7 @@ namespace QDAO.Application.Pipelines
                     break;
                 }
 
-                if (proposalVotingPeriodInfo.StartBlock >= (long)currentBlock.Value)
+                if (proposalVotingPeriodInfo.StartBlock <= (long)currentBlock.Value)
                 {
                     var connection = await _database.OpenConnectionAsync(stoppingToken);
                     await _proposalRepository.InsertState(

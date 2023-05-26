@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.Admin;
 using QDAO.Application.Handlers.DAO;
+using QDAO.Application.Handlers.Proposal;
 using QDAO.Endpoint.DTOs.qDAO;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
@@ -56,6 +57,15 @@ namespace QDAO.Endpoint.Controllers
             // todo: add validations
             var query = new AddPrincipalQuery.Request(senderId, userLogin, requiredApprovals);
 
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
+        }
+
+        [HttpGet("updatable-settings")]
+        public async Task<ActionResult> GetUpdatableSettingsInfo(CancellationToken ct)
+        {
+            var query = new GetUpdatableSettingsValues.Request();
             var response = await _mediator.Send(query, ct);
 
             return Ok(response);
