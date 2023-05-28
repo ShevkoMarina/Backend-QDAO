@@ -11,6 +11,15 @@
           "lib/net5.0/Dapper.dll": {}
         }
       },
+      "Evolve/3.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Evolve.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Evolve.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/5.0.17": {
         "type": "package",
         "dependencies": {
@@ -215,6 +224,20 @@
         "lib/net5.0/Dapper.xml",
         "lib/netstandard2.0/Dapper.dll",
         "lib/netstandard2.0/Dapper.xml"
+      ]
+    },
+    "Evolve/3.1.0": {
+      "sha512": "B2w+SahJIkvpWxwhKDfjIcQZXo38l605+8IhWdK/MbxFgHjze3bItwhc1MP3Z2Go6ZlTo7ElvMhb/0mR3plRaw==",
+      "type": "package",
+      "path": "evolve/3.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "evolve.3.1.0.nupkg.sha512",
+        "evolve.nuspec",
+        "lib/netstandard2.0/Evolve.dll",
+        "lib/netstandard2.0/Evolve.pdb",
+        "lib/netstandard2.0/Evolve.xml"
       ]
     },
     "Microsoft.AspNetCore.Authentication.JwtBearer/5.0.17": {
@@ -630,6 +653,7 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "Dapper >= 2.0.123",
+      "Evolve >= 3.1.0",
       "Npgsql >= 7.0.2",
       "QDAO.Domain >= 1.0.0"
     ]
@@ -680,6 +704,10 @@
           "Dapper": {
             "target": "Package",
             "version": "[2.0.123, )"
+          },
+          "Evolve": {
+            "target": "Package",
+            "version": "[3.1.0, )"
           },
           "Npgsql": {
             "target": "Package",

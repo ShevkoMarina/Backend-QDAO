@@ -23,6 +23,15 @@
           "lib/net5.0/Dapper.dll": {}
         }
       },
+      "Evolve/3.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Evolve.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Evolve.dll": {}
+        }
+      },
       "MediatR/11.1.0": {
         "type": "package",
         "dependencies": {
@@ -645,6 +654,7 @@
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "Dapper": "2.0.123",
+          "Evolve": "3.1.0",
           "Npgsql": "7.0.2",
           "QDAO.Domain": "1.0.0"
         },
@@ -694,6 +704,20 @@
         "lib/net5.0/Dapper.xml",
         "lib/netstandard2.0/Dapper.dll",
         "lib/netstandard2.0/Dapper.xml"
+      ]
+    },
+    "Evolve/3.1.0": {
+      "sha512": "B2w+SahJIkvpWxwhKDfjIcQZXo38l605+8IhWdK/MbxFgHjze3bItwhc1MP3Z2Go6ZlTo7ElvMhb/0mR3plRaw==",
+      "type": "package",
+      "path": "evolve/3.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "evolve.3.1.0.nupkg.sha512",
+        "evolve.nuspec",
+        "lib/netstandard2.0/Evolve.dll",
+        "lib/netstandard2.0/Evolve.pdb",
+        "lib/netstandard2.0/Evolve.xml"
       ]
     },
     "MediatR/11.1.0": {
@@ -2148,6 +2172,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "Evolve >= 3.1.0",
       "MediatR >= 11.1.0",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 11.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.17",
@@ -2200,6 +2225,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "Evolve": {
+            "target": "Package",
+            "version": "[3.1.0, )"
+          },
           "MediatR": {
             "target": "Package",
             "version": "[11.1.0, )"

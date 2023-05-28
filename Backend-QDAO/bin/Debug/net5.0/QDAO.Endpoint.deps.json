@@ -33,6 +33,7 @@
     ".NETCoreApp,Version=v5.0": {
       "QDAO.Endpoint/1.0.0": {
         "dependencies": {
+          "Evolve": "3.1.0",
           "MediatR": "11.1.0",
           "MediatR.Extensions.Microsoft.DependencyInjection": "11.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "5.0.17",
@@ -347,6 +348,17 @@
         },
         "compile": {
           "lib/net5.0/Dapper.dll": {}
+        }
+      },
+      "Evolve/3.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/Evolve.dll": {
+            "assemblyVersion": "3.1.0.0",
+            "fileVersion": "3.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Evolve.dll": {}
         }
       },
       "MediatR/11.1.0": {
@@ -870,6 +882,7 @@
       "QDAO.Persistence/1.0.0": {
         "dependencies": {
           "Dapper": "2.0.123",
+          "Evolve": "3.1.0",
           "Npgsql": "7.0.2",
           "QDAO.Domain": "1.0.0"
         },
@@ -2557,6 +2570,13 @@
       "sha512": "sha512-RDFF4rBLLmbpi6pwkY7q/M6UXHRJEOerplDGE5jwEkP/JGJnBauAClYavNKJPW1yOTWRPIyfj4is3EaJxQXILQ==",
       "path": "dapper/2.0.123",
       "hashPath": "dapper.2.0.123.nupkg.sha512"
+    },
+    "Evolve/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-B2w+SahJIkvpWxwhKDfjIcQZXo38l605+8IhWdK/MbxFgHjze3bItwhc1MP3Z2Go6ZlTo7ElvMhb/0mR3plRaw==",
+      "path": "evolve/3.1.0",
+      "hashPath": "evolve.3.1.0.nupkg.sha512"
     },
     "MediatR/11.1.0": {
       "type": "package",
