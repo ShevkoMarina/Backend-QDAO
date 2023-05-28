@@ -42,5 +42,15 @@ namespace QDAO.Application.Services
                 AddressTo = _contractsManager.GetTokenAddress(),
             };
         }
+
+        public async Task<RawTransaction> GetDefaultMulrisigTransaction(string senderAddress)
+        {
+            var nonce = await GetCurrentNonce(senderAddress);
+            return new RawTransaction
+            {
+                Nonce = nonce,
+                AddressTo = _contractsManager.GetMultisigAddress(),
+            };
+        }
     }
 }

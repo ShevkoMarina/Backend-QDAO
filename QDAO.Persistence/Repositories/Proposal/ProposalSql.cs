@@ -18,6 +18,14 @@
                                             (proposal_id, start_block, end_block, votes_for, votes_against)
                                             values (@proposal_id, @start_block, @end_block, @votes_for, @votes_against)";
 
+        internal const string AddVotesForProposal = @"update voting set 
+                                                votes_for = @votes_for
+                                                where proposal_id = @proposal_id;";
+
+        internal const string AddVotesAgainstProposal = @"update voting set
+                                                votes_against = @votes_against 
+                                                where proposal_id = @proposal_id;";
+
 
         internal const string GetByProposer = @"--ProposalSql.GetByProposer
                                                 select id,

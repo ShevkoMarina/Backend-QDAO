@@ -3,11 +3,8 @@ using Nethereum.ABI.FunctionEncoding.Attributes;
 using Nethereum.Contracts;
 using QDAO.Application.Services;
 using QDAO.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using QDAO.Persistence.Repositories.User;
 using System.Numerics;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,21 +12,22 @@ namespace QDAO.Application.Handlers.Proposal
 {
     public class ApproveByPrincipal
     {
-        public record Request(uint ProposalId) : IRequest<Response>;
+        public record Request(long ProposalId, int UserId) : IRequest<RawTransaction>;
 
-        public record Response(RawTransaction Transaction);
-
-        public class Handler : IRequestHandler<Request, Response>
+        public class Handler : IRequestHandler<Request, RawTransaction>
         {
             private TransactionCreator _transactionService;
+            private UserRepository _userRespository;
 
-            public Handler(TransactionCreator transactionService)
+            public Handler(TransactionCreator transactionService, UserRepository userRespository)
             {
                 _transactionService = transactionService;
+                _userRespository = userRespository;
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<RawTransaction> Handle(Request request, CancellationToken cancellationToken)
             {
+                var userAccount = await _userRespository.GetUserAccountById(request.UserId, cancellationToken);
                 var txMessage = new ApproveMessage
                 {
                     ProposalId = request.ProposalId,
@@ -38,12 +36,12 @@ namespace QDAO.Application.Handlers.Proposal
 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
 
-                var rawTx = await _transactionService.GetDefaultRawTransaction("0x618E0fFEe21406f493D22f9163c48E2D036de6B0");
+                var rawTx = await _transactionService.GetDefaultRawTransaction(userAccount);
 
                 rawTx.Data = dataHex;
 
 
-                return new Response(rawTx);
+                return rawTx;
             }
         }
     }

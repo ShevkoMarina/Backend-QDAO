@@ -64,6 +64,54 @@ namespace QDAO.Persistence.Repositories.Proposal
             }
         }
 
+        public async Task AddVotesForProposal(
+            long proposalId, 
+            long votesFor, 
+            DbConnection connection, CancellationToken ct)
+        {
+            try
+            {
+                await _database.ExecuteAsync(
+                      ProposalSql.AddVotesForProposal,
+                      connection,
+                      ct,
+                      new
+                      {
+                          proposal_id = (long)proposalId,
+                          votes_for = votesFor,
+                      }
+                  );
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async Task AddVotesAgainstProposal(
+           long proposalId,
+           long votesAgainst,
+           DbConnection connection, CancellationToken ct)
+        {
+            try
+            {
+                await _database.ExecuteAsync(
+                      ProposalSql.AddVotesForProposal,
+                      connection,
+                      ct,
+                      new
+                      {
+                          proposal_id = (long)proposalId,
+                          votes_against = votesAgainst
+                      }
+                  );
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         public async Task InsertState(ProposalState state, uint proposalId, DbConnection connection, CancellationToken ct)
         {
             await _database.ExecuteAsync(

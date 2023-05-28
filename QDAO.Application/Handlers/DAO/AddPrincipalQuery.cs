@@ -14,11 +14,9 @@ namespace QDAO.Application.Handlers.DAO
 {
     public class AddPrincipalQuery
     {
-        public record Request(int UserId, string PrincipalLogin, short RequiredApprovals) : IRequest<Response>;
+        public record Request(int UserId, string PrincipalLogin, short RequiredApprovals) : IRequest<RawTransaction>;
 
-        public record Response(RawTransaction Transaction);
-
-        public class Handler : IRequestHandler<Request, Response>
+        public class Handler : IRequestHandler<Request, RawTransaction>
         {
             private readonly IDapperExecutor _database;
             private readonly TransactionCreator _transactionService;
@@ -32,7 +30,7 @@ namespace QDAO.Application.Handlers.DAO
 
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            public async Task<RawTransaction> Handle(Request request, CancellationToken cancellationToken)
             {
                 var senderAddress = await _userRepository.GetUserAccountById(request.UserId, cancellationToken);
 
@@ -57,11 +55,11 @@ namespace QDAO.Application.Handlers.DAO
 
                 var dataHex = Nethereum.Hex.HexConvertors.Extensions.HexByteConvertorExtensions.ToHex(txMessage.GetCallData());
 
-                var rawTx = await _transactionService.GetDefaultRawTransaction(senderAddress);
+                var rawTx = await _transactionService.GetDefaultMulrisigTransaction(senderAddress);
 
                 rawTx.Data = dataHex;
 
-                return new Response(rawTx);
+                return rawTx;
             }
 
             private const string GetUserByLogin = @"--GetUserByLogin

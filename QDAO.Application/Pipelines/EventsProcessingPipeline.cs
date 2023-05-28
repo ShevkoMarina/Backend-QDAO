@@ -62,7 +62,6 @@ namespace QDAO.Application.Pipelines
 
                 using var connection = await _database.OpenConnectionAsync(stoppingToken);
 
-        
                 // Transaction failed
                 if (receipt.Status.Value == 0)
                 {
@@ -85,6 +84,18 @@ namespace QDAO.Application.Pipelines
                 if (contractEvent is ProposalQueuedEventDto proposalQueueEvent)
                 {
                     await HandleProposalQueueEvent(proposalQueueEvent, stoppingToken);
+                }
+                if (contractEvent is VoteCastedEventDto voteCastedEvent)
+                {
+                    await HandleVoteCastedEvent(voteCastedEvent, stoppingToken);
+                }
+                if (contractEvent is PrincipalAddedEventDto principalAddedEvenet)
+                {
+                    await HandlePrincipalAddedEvent(principalAddedEvenet, stoppingToken);
+                }
+                if (contractEvent is ProposalApprovedEventDto proposalApprovedEvent)
+                {
+                    await HandleProposalApprovedEvent(proposalApprovedEvent, stoppingToken);
                 }
                                       
                 await _transactionRepostiory.SetProcessed(queuedTransaction.QueueId, connection);                  
@@ -145,6 +156,52 @@ namespace QDAO.Application.Pipelines
                 proposalQueueEvent.Id,
                 connection,
                 stoppingToken);
+        }
+
+        private async Task HandleVoteCastedEvent(VoteCastedEventDto voteCastedEvent, CancellationToken stoppingToken)
+        {
+            using var connection = await _database.OpenConnectionAsync(stoppingToken);
+
+            if (voteCastedEvent.Support)
+            {
+                await _proposalRepository.AddVotesForProposal(
+                voteCastedEvent.ProposalId,
+                voteCastedEvent.Votes,
+                connection,
+                stoppingToken);
+            }
+            else
+            {
+                await _proposalRepository.AddVotesAgainstProposal(
+                voteCastedEvent.ProposalId,
+                voteCastedEvent.Votes,
+                connection,
+                stoppingToken);
+            }
+        }
+
+        private async Task HandlePrincipalAddedEvent(PrincipalAddedEventDto principalAddedEvent, CancellationToken ct)
+        {
+            using var connection = await _database.OpenConnectionAsync(ct);
+
+            await _database.ExecuteAsync("update users set role = 2 where account = @account",
+                connection,
+                ct,
+                new
+                {
+                    account = principalAddedEvent.Principal
+                });
+        }
+
+        private async Task HandleProposalApprovedEvent(ProposalApprovedEventDto proposalApprovedEvent, CancellationToken ct)
+        {
+            using var connection = await _database.OpenConnectionAsync(ct);
+            await _proposalRepository.InsertState(
+               ProposalState.Succeeded,
+               (uint)proposalApprovedEvent.ProposalId,
+               connection,
+               ct);
+
         }
     }
 }

@@ -95,24 +95,23 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
-        [HttpPost("approve")]
-        public async Task<ActionResult> ApproveProposal([FromQuery] uint proposalId, CancellationToken ct)
+        [HttpGet("approve")]
+        public async Task<ActionResult> ApproveProposal(
+            [FromQuery] long proposalId,
+            [FromQuery] int userId,
+            CancellationToken ct)
         {
-            var query = new ApproveByPrincipal.Request(proposalId);
+            var query = new ApproveByPrincipal.Request(proposalId, userId);
             var response = await _mediator.Send(query, ct);
 
             return Ok(response);
         }
-
-        // Нужен синхронизатор статусов пропозалов
-        // Тут нужен тонкий пропозал - тока имя и статус
         
 
         [HttpGet("get-by-user")]
         public async Task<ActionResult<IReadOnlyCollection<ProposalThin>>> GetProposalsByUserId(
             [FromQuery] int userId,
             CancellationToken ct)        {
-            // можно мониторить переходы по статусам и алертить если что то пошло не так
 
             var query = new GetProposalsByUserQuery.Request(userId);
             var response = await _mediator.Send(query, ct);

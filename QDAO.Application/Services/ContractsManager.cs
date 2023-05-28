@@ -13,7 +13,7 @@ namespace QDAO.Application.Services
         }
 
  
-        private string _delegator = "0x283e148550026d0262800eD7Bd7d193E841fa1Da";
+        private string _delegator = "0x4d659DFf294C51Acc906183EFe41619C63Fae264";
 
         public string GetGovernorDelegator()
         {
@@ -32,7 +32,7 @@ namespace QDAO.Application.Services
 
         public string GetMultisigAddress()
         {
-            return "0xA6fE4cE54D2ac02618060842ccA41aAFd2a0Cf95";
+            return "0xc61e88535C3c1D6107192D11B27731090bEF9B68";
         }
     }
 }
