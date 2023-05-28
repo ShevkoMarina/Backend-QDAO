@@ -152,10 +152,19 @@ namespace QDAO.Application.Pipelines
         {
             using var connection = await _database.OpenConnectionAsync(stoppingToken);
             await _proposalRepository.InsertState(
-                ProposalState.Active,
+                ProposalState.Queued,
                 proposalQueueEvent.Id,
                 connection,
                 stoppingToken);
+
+            await _database.ExecuteAsync("update voting set eta = @eta where proposal_id = @proposal_id",
+                connection,
+                stoppingToken,
+                new
+                {
+                    proposal_id = (long)proposalQueueEvent.Id,
+                    eta = (long)proposalQueueEvent.Eta
+                });
         }
 
         private async Task HandleVoteCastedEvent(VoteCastedEventDto voteCastedEvent, CancellationToken stoppingToken)

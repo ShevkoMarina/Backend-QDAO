@@ -35,6 +35,7 @@ namespace QDAO.Application.Pipelines
             while (!stoppingToken.IsCancellationRequested)
             {
                 var currentBlock = await web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
+                
 
                 var oldestPendingProposal = await _database.QuerySingleOrDefaultAsync<ProposalVotingPeriodInfo>(
                     GetOldestCreatedProposal,
@@ -77,6 +78,27 @@ namespace QDAO.Application.Pipelines
                         await _proposalRepository.InsertState(
                           state,
                           (uint)oldestActiveProposal.Id,
+                          connection,
+                          CancellationToken.None);
+                    }
+                }
+
+
+                var oldestQueuedProposal = await _database.QuerySingleOrDefaultAsync<ProposalVotingPeriodInfo>(
+                 GetOldestQueuedProposal,
+                 stoppingToken);
+
+                if (oldestQueuedProposal != default)
+                {
+                    var block = await web3.Eth.Blocks.GetBlockWithTransactionsByNumber.SendRequestAsync(currentBlock);
+                    var blockTimestamp = block.Timestamp.Value;
+
+                    if (oldestQueuedProposal.Eta >= blockTimestamp)
+                    {
+                        var connection = await _database.OpenConnectionAsync(stoppingToken);
+                        await _proposalRepository.InsertState(
+                          Domain.ProposalState.ReadyToExecute,
+                          (uint)oldestQueuedProposal.Id,
                           connection,
                           CancellationToken.None);
                     }
@@ -129,12 +151,30 @@ namespace QDAO.Application.Pipelines
                                                             order by v.start_block
                                                             limit 1";
 
+        private const string GetOldestQueuedProposal = @" select
+                                                            id as Id,
+                                                            v.start_block as StartBlock,
+                                                            v.end_block as EndBlock,
+                                                            v.eta as Eta
+                                                            from proposal p
+                                                            join voting v on p.id = v.proposal_id
+                                                            join lateral (
+                                                                select state, created_at
+                                                                from proposal_state_log psl
+                                                                where psl.proposal_id = p.id
+                                                                order by psl.created_at DESC NULLS LAST
+                                                                limit 1
+                                                                ) AS proposal_state on true
+                                                            where proposal_state.state = 6
+                                                            order by v.start_block
+                                                            limit 1";
+
         public class ProposalVotingPeriodInfo
         {
             public long Id { get; set; }
             public int StartBlock { get; set; }
             public int EndBlock { get; set; }
+            public int Eta { get; set; }
         }
-          
     }
 }

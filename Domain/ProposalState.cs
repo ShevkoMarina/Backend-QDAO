@@ -9,6 +9,7 @@
         NoQuorum = 4,
         Succeeded = 5,
         Queued = 6,
-        Executed = 7
+        ReadyToExecute = 7,
+        Executed = 8
     }
 }
