@@ -30,7 +30,6 @@ namespace QDAO.Endpoint.Controllers
             [FromQuery] [Required] int senderId,
             CancellationToken ct)
         {
-            // todo: add validations
             var query = new AddPrincipalQuery.Request(senderId, userLogin, requiredApprovals);
 
             var response = await _mediator.Send(query, ct);

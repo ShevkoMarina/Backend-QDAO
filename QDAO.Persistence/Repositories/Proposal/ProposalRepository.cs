@@ -128,18 +128,23 @@ namespace QDAO.Persistence.Repositories.Proposal
 
         public async Task<IReadOnlyCollection<ProposalThin>> GetProposalsByProposerId(long proposerId, CancellationToken ct)
         {
-            var proposals = await _database.QueryAsync<ProposalThin>(
-                ProposalSql.GetByProposer,
-                ct,
-                new 
-                {
-                    proposer_id = proposerId
-                }
-             );
+            try
+            {
+                var proposals = await _database.QueryAsync<ProposalThin>(
+                    ProposalSql.GetByProposer,
+                    ct,
+                    new
+                    {
+                        proposer_id = proposerId
+                    }
+                 );
 
-            return proposals;
+                return proposals;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ошибка подключения к базе данных.");
+            }
         }
-
-      
     }
 }

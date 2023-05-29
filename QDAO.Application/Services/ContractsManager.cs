@@ -15,18 +15,6 @@ namespace QDAO.Application.Services
  
         private string _delegator = "0x808f7bb1Fb2f9387211a1CD3bdf7aBF85a04c92c";
 
-        private string _pendingImplementation;
-
-        public void setPendingImplementation(string pendingImplementation)
-        {
-            _pendingImplementation = pendingImplementation;
-        }
-
-        public void removePendingImplementation()
-        {
-            _pendingImplementation = default;
-        }
-
         public string GetGovernorDelegator()
         {
             return _delegator;

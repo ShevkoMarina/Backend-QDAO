@@ -1,13 +1,15 @@
 ﻿using MediatR;
+using Npgsql;
 using QDAO.Domain;
 using QDAO.Persistence;
 using QDAO.Persistence.Repositories.User;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace QDAO.Application.Handlers.User
 {
-    public class AddAdminCommand
+    public static class AddAdminCommand
     {
         public record Request(string Login, string Password, string Account) : IRequest;
 
@@ -22,20 +24,36 @@ namespace QDAO.Application.Handlers.User
 
             public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
             {
-                var connection = await _database.OpenConnectionAsync(cancellationToken);
+                try
+                {
+                    var connection = await _database.OpenConnectionAsync(cancellationToken);
 
-                await _database.ExecuteAsync(
-                    UpdateAdminAccount,
-                    connection,
-                    cancellationToken,
-                    new
+                    await _database.ExecuteAsync(
+                        UpdateAdminAccount,
+                        connection,
+                        cancellationToken,
+                        new
+                        {
+                            account = request.Account,
+                            password = request.Password,
+                            login = request.Login
+                        });
+
+                    return new Unit();
+                }
+                catch (NpgsqlException ex)
+                {
+                    if (ex.SqlState == "23505")
                     {
-                        account = request.Account,
-                        password = request.Password,
-                        login = request.Login
-                    });
+                        throw new ArgumentException("Данный логин уже занят");
+                    }
 
-                return new Unit();
+                    throw new ArgumentException("Ошибка при работе с базой данных");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Ошибка подключения к база данных");
+                }
             }
 
             private const string UpdateAdminAccount = @"update users set 

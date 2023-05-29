@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QDAO.Application.Handlers.DAO
 {
-    class GetNewImplementationInfo
+    public class GetNewImplementationInfo
     {
     }
 }

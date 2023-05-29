@@ -4,6 +4,7 @@ using Nethereum.Contracts;
 using QDAO.Application.Services;
 using QDAO.Domain;
 using QDAO.Persistence.Repositories.User;
+using System;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,6 +31,11 @@ namespace QDAO.Application.Handlers.Proposal
             public async Task<RawTransaction> Handle(Request request, CancellationToken cancellationToken)
             {
                 var userAccount = await _userRepository.GetUserAccountById(request.UserId, cancellationToken);
+
+                if (userAccount == default)
+                {
+                    throw new ArgumentException("Пользователь не найден");
+                }
 
                 var txMessage = new QueueMessage
                 {

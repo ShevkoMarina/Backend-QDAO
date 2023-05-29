@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace QDAO.Application.Handlers.Proposal
 {
-    public static class CreateProposalTxQuery
+    public static class GetCreateProposalTxQuery
     {
         public record Request(
             string Name,

@@ -1,4 +1,5 @@
 ﻿using QDAO.Domain;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -60,15 +61,22 @@ namespace QDAO.Persistence.Repositories.User
           int userId,
           CancellationToken ct)
         {
-            var account = await _database.QuerySingleOrDefaultAsync<string>(
-                UserSql.GetUserAccontById,
-                ct,
-                new
-                {
-                    userId = userId
-                });
+            try
+            {
+                var account = await _database.QuerySingleOrDefaultAsync<string>(
+                    UserSql.GetUserAccontById,
+                    ct,
+                    new
+                    {
+                        userId = userId
+                    });
 
-            return account;
+                return account;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ошиюка подключения к базе данных");
+            }
         }
 
 

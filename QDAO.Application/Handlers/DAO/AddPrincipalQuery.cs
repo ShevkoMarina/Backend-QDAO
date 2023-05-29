@@ -33,7 +33,7 @@ namespace QDAO.Application.Handlers.DAO
             public async Task<RawTransaction> Handle(Request request, CancellationToken cancellationToken)
             {
                 var senderAddress = await _userRepository.GetUserAccountById(request.UserId, cancellationToken);
-
+                
                 var userAddress = await _database.QuerySingleOrDefaultAsync<string>(
                     GetUserByLogin,
                     cancellationToken,
@@ -42,7 +42,7 @@ namespace QDAO.Application.Handlers.DAO
                         login = request.PrincipalLogin
                     });
 
-                if (userAddress == default)
+                if (userAddress == default || senderAddress == default)
                 {
                     throw new ArgumentException("Пользователь не найден");
                 }

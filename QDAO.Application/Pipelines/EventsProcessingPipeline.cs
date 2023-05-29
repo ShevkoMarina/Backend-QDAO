@@ -222,7 +222,7 @@ namespace QDAO.Application.Pipelines
             using var connection = await _database.OpenConnectionAsync(ct);
             await _proposalRepository.InsertState(
                ProposalState.Executed,
-               (uint)proposalExecutedEvent.I,
+               (uint)proposalExecutedEvent.Id,
                connection,
                ct);
         }

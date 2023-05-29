@@ -51,7 +51,7 @@ namespace QDAO.Endpoint
             services.AddSingleton<IDapperExecutor, DapperExecutor>();
 
           
-            services.AddMediatR(typeof(CreateProposalTxQuery.Handler));
+            services.AddMediatR(typeof(GetCreateProposalTxQuery.Handler));
         }
 
     
@@ -66,6 +66,7 @@ namespace QDAO.Endpoint
                     options.RoutePrefix = string.Empty;
                 });
                 app.UseDeveloperExceptionPage();
+               
             }
 
             app.UseRouting();

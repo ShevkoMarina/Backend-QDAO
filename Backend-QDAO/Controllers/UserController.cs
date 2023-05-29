@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.User;
 using QDAO.Endpoint.DTOs;
+using QDAO.Endpoint.DTOs.Error;
 using QDAO.Endpoint.DTOs.User;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,10 +26,17 @@ namespace QDAO.Endpoint.Controllers
             [FromBody] AuthorizeUserRequestDto request, 
             CancellationToken ct)
         {
-            var query = new AuthorizeUserQuery.Request(request.Login, request.Password);
-            var response = await _mediator.Send(query, ct);
+            try
+            {
+                var query = new AuthorizeUserQuery.Request(request.Login, request.Password);
+                var response = await _mediator.Send(query, ct);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return ex.ToHttp();
+            }
         }
 
 
@@ -36,10 +45,17 @@ namespace QDAO.Endpoint.Controllers
             [FromBody] AddUserDto request, 
             CancellationToken ct)
         {
-            var query = new AddUserCommand.Request(request.Login, request.Password, request.Account);
-            var response = await _mediator.Send(query, ct);
+            try
+            {
+                var query = new AddUserCommand.Request(request.Login, request.Password, request.Account);
+                var response = await _mediator.Send(query, ct);
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return ex.ToHttp();
+            }
         }
 
         [HttpPost("init-admin")]
@@ -47,10 +63,17 @@ namespace QDAO.Endpoint.Controllers
             [FromBody] AddUserDto request,
             CancellationToken ct)
         {
-            var query = new AddAdminCommand.Request(request.Login, request.Password, request.Account);
-            var response = await _mediator.Send(query, ct);
+            try
+            {
+                var query = new AddAdminCommand.Request(request.Login, request.Password, request.Account);
+                var response = await _mediator.Send(query, ct);
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return ex.ToHttp();
+            }
         }
     }
 }

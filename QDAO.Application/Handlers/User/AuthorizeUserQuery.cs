@@ -36,14 +36,15 @@ namespace QDAO.Application.Handlers.User
                     password = request.Password
                 });
 
-                if (user != default)
+                if (user == default)
                 {
-                    var token = await _securityService.GetAccessToken(user.Id, user.Role, cancellationToken);
-
-                    return new Response(user.Id, user.Role, token, user.Account);
+                    throw new ArgumentException("Неверные логин или пароль.");
                 }
 
-                throw new ArgumentException("Пользователь не найден");
+               
+               var token = await _securityService.GetAccessToken(user.Id, user.Role, cancellationToken);
+
+               return new Response(user.Id, user.Role, token, user.Account);
             }
 
             private const string GetByLoginAndPassword = @"--UserSql.GetByLoginAndPassword

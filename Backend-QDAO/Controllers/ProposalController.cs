@@ -1,15 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.Proposal;
-using QDAO.Application.Services;
 using QDAO.Domain;
-using QDAO.Endpoint.DTOs;
+using QDAO.Endpoint.DTOs.Error;
 using QDAO.Endpoint.DTOs.Proposal;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Transactions;
 
 namespace QDAO.Endpoint.Controllers
 {
@@ -18,72 +16,78 @@ namespace QDAO.Endpoint.Controllers
     public class ProposalController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly TransactionCreator _transactionService;
 
-        public ProposalController(
-            TransactionCreator transactionService,
-            IMediator mediator)
+        public ProposalController(IMediator mediator)
         {
-
             _mediator = mediator;
-            _transactionService = transactionService;
         }
-
-        [HttpGet("count")]
-        public async Task<ActionResult<long>> GetProposalsCount(CancellationToken ct)
-        {
-            var query = new GetProposalsCountQuery.Request();
-            var response = await _mediator.Send(query, ct);
-
-            return Ok(((long)response.ProposalsCount));
-        }
-
 
         [HttpPost("create")]
-        public async Task<ActionResult<RawTransaction>> CreateProposal(
+        public async Task<ActionResult<RawTransaction>> GetCreateProposalTransaction(
             [FromBody] CreateProposalDto request,
             CancellationToken ct)
         {
-            var query = new CreateProposalTxQuery.Request(
+            try
+            {
+                var query = new GetCreateProposalTxQuery.Request(
                 request.Name,
                 request.Description,
-                ProposalType.UpdateVotingPeriod, 
+                ProposalType.UpdateVotingPeriod,
                 request.UserId,
                 request.NewValue);
-            
-            var response = await _mediator.Send(query, ct);
 
-            return Ok(response.RawTransaction);
+                var response = await _mediator.Send(query, ct);
+
+                return Ok(response.RawTransaction);
+            }
+            catch (Exception ex) 
+            {
+                return ex.ToHttp();
+            }
         }
 
 
         [HttpPost("queue")]
-        public async Task<ActionResult> QueueProposal(
+        public async Task<ActionResult> GetQueueProposalTransaction(
             [FromQuery] long proposalId,
             [FromQuery] int userId,
             CancellationToken ct)
         {
-            var query = new QueueProposal.Request(proposalId, userId);
-            var response = await _mediator.Send(query, ct);
+            try
+            {
+                var query = new QueueProposal.Request(proposalId, userId);
+                var response = await _mediator.Send(query, ct);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return ex.ToHttp();
+            }
         }
 
         [HttpPost("execute")]
-        public async Task<ActionResult> ExecuteProposal(
+        public async Task<ActionResult> GetExecuteProposalTransaction(
             [FromQuery] long proposalId,
             [FromQuery] int userId,
             CancellationToken ct)
         {
-            var query = new GetProposalExecutionTransactionQuery.Request(proposalId, userId);
-            var response = await _mediator.Send(query, ct);
+            try
+            {
+                var query = new GetProposalExecutionTransactionQuery.Request(proposalId, userId);
+                var response = await _mediator.Send(query, ct);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return ex.ToHttp();
+            }
         }
 
 
         [HttpGet("vote")]
-        public async Task<ActionResult> VoteForProposal(
+        public async Task<ActionResult> GetVotingTransaction(
             [FromQuery] int userId,
             [FromQuery] long proposalId, 
             [FromQuery] bool support,
@@ -96,7 +100,7 @@ namespace QDAO.Endpoint.Controllers
         }
 
         [HttpGet("approve")]
-        public async Task<ActionResult> ApproveProposal(
+        public async Task<ActionResult> GetApproveProposalTransaction(
             [FromQuery] long proposalId,
             [FromQuery] int userId,
             CancellationToken ct)
