@@ -92,7 +92,8 @@ namespace QDAO.Application.Pipelines
                 {
                     var block = await web3.Eth.Blocks.GetBlockWithTransactionsByNumber.SendRequestAsync(currentBlock);
                     var blockTimestamp = block.Timestamp.Value;
-
+                    // 
+                    //1685491555 eta
                     if (blockTimestamp >= oldestQueuedProposal.Eta)
                     {
                         var connection = await _database.OpenConnectionAsync(stoppingToken);

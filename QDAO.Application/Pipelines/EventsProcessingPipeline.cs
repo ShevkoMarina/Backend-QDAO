@@ -97,6 +97,10 @@ namespace QDAO.Application.Pipelines
                 {
                     await HandleProposalApprovedEvent(proposalApprovedEvent, stoppingToken);
                 }
+                if (contractEvent is ProposalExecutedEventDto proposalExecutedEvent)
+                {
+                    await HandleProposalExecutedEvent(proposalExecutedEvent, stoppingToken);
+                }
                                       
                 await _transactionRepostiory.SetProcessed(queuedTransaction.QueueId, connection);                  
             }
@@ -211,6 +215,16 @@ namespace QDAO.Application.Pipelines
                connection,
                ct);
 
+        }
+
+        private async Task HandleProposalExecutedEvent(ProposalExecutedEventDto proposalExecutedEvent, CancellationToken ct)
+        {
+            using var connection = await _database.OpenConnectionAsync(ct);
+            await _proposalRepository.InsertState(
+               ProposalState.Executed,
+               (uint)proposalExecutedEvent.Id,
+               connection,
+               ct);
         }
     }
 }

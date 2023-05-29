@@ -43,6 +43,12 @@ namespace QDAO.Application.Services
                 return proposalApprovedEvent.Select(e => (IEventDTO)e.Event).ToList();
             }
 
+            var proposalExecutedEvent = receipt.DecodeAllEvents<ProposalExecutedEventDto>();
+            if (proposalExecutedEvent.Any())
+            {
+                return proposalExecutedEvent.Select(e => (IEventDTO)e.Event).ToList();
+            }
+
 
             return new List<IEventDTO>();
         }
