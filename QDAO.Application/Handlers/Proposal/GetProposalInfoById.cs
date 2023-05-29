@@ -59,7 +59,7 @@ namespace QDAO.Application.Handlers.Proposal
         long Id, 
         string Name,
         string Description, 
-        long VotesFor,
-        long VotesAgainst,
+        int VotesFor,
+        int VotesAgainst,
         ProposalState State);
 }
