@@ -105,10 +105,17 @@ namespace QDAO.Endpoint.Controllers
             [FromQuery] int userId,
             CancellationToken ct)
         {
-            var query = new ApproveByPrincipal.Request(proposalId, userId);
-            var response = await _mediator.Send(query, ct);
+            try
+            {
+                var query = new ApproveByPrincipal.Request(proposalId, userId);
+                var response = await _mediator.Send(query, ct);
 
-            return Ok(response);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return ex.ToHttp();
+            }
         }
         
 

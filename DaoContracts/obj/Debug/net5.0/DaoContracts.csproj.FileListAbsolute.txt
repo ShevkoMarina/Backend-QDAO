@@ -1,5 +1,0 @@
-C:\Users\User\Desktop\Diploma\Backend-QDAO\DaoContracts\obj\Debug\net5.0\DaoContracts.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\User\Desktop\Diploma\Backend-QDAO\DaoContracts\obj\Debug\net5.0\DaoContracts.AssemblyInfoInputs.cache
-C:\Users\User\Desktop\Diploma\Backend-QDAO\DaoContracts\obj\Debug\net5.0\DaoContracts.AssemblyInfo.cs
-C:\Users\User\Desktop\Diploma\Backend-QDAO\DaoContracts\obj\Debug\net5.0\DaoContracts.csproj.CoreCompileInputs.cache
-C:\Users\User\Desktop\Diploma\Backend-QDAO\DaoContracts\obj\Debug\net5.0\DaoContracts.csproj.AssemblyReference.cache
