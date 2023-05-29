@@ -23,31 +23,6 @@ namespace QDAO.Endpoint.Controllers
             _mediator = mediator;
         }
 
-
-        [HttpPost("create-qdao")]
-        public async Task<ActionResult> CreateQDAO(
-            [FromBody] CreateQDAODto request,
-            CancellationToken ct)
-        {
-
-            var query = new CreateDAOQuery.Request(request.AdminAddress, request.TotalSupply, request.Delay);
-            var response = await _mediator.Send(query, ct);
-
-            return Ok(response.Result);
-        }
-
-        [HttpGet("update-governor")]
-        public async Task<ActionResult> UpdateGovernorImplementation(CancellationToken ct)
-        {
-            return Ok();
-        }
-
-        [HttpGet("accept")]
-        public async Task<ActionResult> AcceptNewImplementation(CancellationToken ct)
-        {
-            return Ok();
-        }
-
         [HttpGet("add-principal")]
         public async Task<ActionResult> AddPrincipals(
             [FromQuery] [Required] string userLogin,
@@ -72,6 +47,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        // Перенести в токены
         [HttpGet("transfer-tokens")]
         public async Task<ActionResult> Transfer(
             [FromQuery] int userId,
@@ -83,6 +59,49 @@ namespace QDAO.Endpoint.Controllers
             var response = await _mediator.Send(query, ct);
 
             return Ok(response.TransactionData);
+        }
+
+        [HttpGet("approve-implementation")]
+        public async Task<ActionResult> GetApproveNewImplementationTransaction(
+            [FromQuery] int userId,
+            CancellationToken ct)
+        {
+            var query = new ApproveNewImplementationTxQuery.Request(userId);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
+        }
+
+        [HttpGet("implementation-info")]
+        public async Task<ActionResult> GetPendingImplementationInfo(CancellationToken ct)
+        {
+            var query = new GetPendingImplementationInfoQuery.Request();
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
+        }
+
+        [HttpGet("set-pending")]
+        public async Task<ActionResult> SetPendingImplementationTransaction(
+            [FromQuery] int userId,
+            [FromQuery] string address,
+            CancellationToken ct)
+        {
+            var query = new SetPendingImplementationTxQuery.Request(userId, address);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
+        }
+
+        [HttpGet("set-implementation")]
+        public async Task<ActionResult> SetNewImplementationTransaction(
+            [FromQuery] int userId,
+            CancellationToken ct)
+        {
+            var query = new SetNewImplementationTxQuery.Request(userId);
+            var response = await _mediator.Send(query, ct);
+
+            return Ok(response);
         }
     }
 }
