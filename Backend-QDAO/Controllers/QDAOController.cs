@@ -1,10 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using QDAO.Application.Handlers.Admin;
 using QDAO.Application.Handlers.DAO;
-using QDAO.Application.Handlers.Proposal;
 using QDAO.Application.Handlers.Token;
-using QDAO.Endpoint.DTOs.qDAO;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;

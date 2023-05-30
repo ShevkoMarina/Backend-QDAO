@@ -9,7 +9,7 @@ namespace QDAO.Application.Services
         public ContractsManager()
         {
             // web3 = new Nethereum.Web3.Web3("https://eth-goerli.g.alchemy.com/v2/PU1jr72jAHmucb_oUHObuiwoCCsdtODL");
-            Web3 = new Nethereum.Web3.Web3("http://127.0.0.1:8545");
+            Web3 = new Nethereum.Web3.Web3("http://192.168.1.45:8545");
         }
 
  

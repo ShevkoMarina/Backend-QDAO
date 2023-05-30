@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using MediatR;
 using QDAO.Application.Services;
 using QDAO.Application.Handlers.Proposal;
-using QDAO.Application.GrpcClients;
 using QDAO.Persistence;
 using QDAO.Application.Pipelines;
 using Prometheus;
@@ -28,11 +27,6 @@ namespace QDAO.Endpoint
             services.AddScoped<TransactionCreator>();
             services.AddScoped<ContractsManager>();
             services.AddScoped<SecurityService>();
-
-
-            services.AddScoped<ProposalGrpcClient>();
-            services.AddScoped<AdminGrpcClient>();
-
 
             services.AddSingleton<TransactionRepository>();
             services.AddSingleton<ProposalRepository>();
