@@ -6,6 +6,7 @@ using QDAO.Application.Services.DTOs.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace QDAO.Application.Services
 {
@@ -32,7 +33,7 @@ namespace QDAO.Application.Services
                     notBefore: DateTime.UtcNow,
                     claims: userIdentity.Claims,
                     expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey("123"), SecurityAlgorithms.HmacSha256));
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 

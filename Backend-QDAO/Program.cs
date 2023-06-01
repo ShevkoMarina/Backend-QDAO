@@ -1,9 +1,9 @@
 using EvolveDb;
-using MediatR;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Backend_QDAO
@@ -26,7 +26,11 @@ namespace Backend_QDAO
 
         private static void MigrateDatabase()
         {
-            var connectionString = "User Id=postgres;Password=sukaBlyat123;Server=db.kidrgducdfhhwdjdvwoq.supabase.co;Port=5432;Database=postgres";
+            var config = new ConfigurationBuilder()
+               .SetBasePath(Directory.GetCurrentDirectory())
+               .AddJsonFile("appsettings.json", optional: true)
+               .Build();
+            var connectionString = config.GetValue<string>("ConnectionString");
             var connection = new NpgsqlConnection(connectionString);
 
             var evolve = new Evolve(connection)

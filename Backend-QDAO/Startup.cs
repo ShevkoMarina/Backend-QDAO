@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using QDAO.Application.Services.DTOs.Security;
 using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
 
 namespace QDAO.Endpoint
 {
@@ -47,7 +48,7 @@ namespace QDAO.Endpoint
                             ValidateLifetime = true,
 
                             // установка ключа безопасности
-                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(), 
+                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey("123"), 
                             // валидация ключа безопасности
                             ValidateIssuerSigningKey = true,
                             RoleClaimType = ClaimsIdentity.DefaultRoleClaimType,
