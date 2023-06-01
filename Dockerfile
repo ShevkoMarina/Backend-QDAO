@@ -14,4 +14,3 @@ WORKDIR /Backend-QDAO
 COPY --from=build-env /Backend-QDAO/out .
 ENTRYPOINT ["dotnet", "QDAO.Endpoint.dll"]
 EXPOSE 80
-

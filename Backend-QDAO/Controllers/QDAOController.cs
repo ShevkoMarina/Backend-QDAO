@@ -43,7 +43,6 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
-        // Перенести в токены
         [HttpGet("transfer-tokens")]
         public async Task<ActionResult> Transfer(
             [FromQuery] int userId,
@@ -74,7 +73,7 @@ namespace QDAO.Endpoint.Controllers
             var query = new GetPendingImplementationInfoQuery.Request();
             var response = await _mediator.Send(query, ct);
 
-            return Ok(response);
+            return Ok(response.PendingAddress);
         }
 
         [HttpGet("set-pending")]

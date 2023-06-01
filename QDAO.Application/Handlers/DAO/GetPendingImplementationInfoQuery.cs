@@ -28,18 +28,10 @@ namespace QDAO.Application.Handlers.DAO
 
                 if (pendingImplementation == "0x0000000000000000000000000000000000000000")
                 {
-                    return new PendingImplementationInfo(string.Empty, false, false);
+                    return new PendingImplementationInfo("0x0000000000000000000000000000000000000000", false, false);
                 }
 
-                var isPrincipalApprovedHandler = _manager.Web3.Eth.GetContractQueryHandler<isPrincipalApproved>();
-                var isPrincipalApproved = await isPrincipalApprovedHandler.QueryAsync<bool>(_manager.GetGovernorDelegator(), new isPrincipalApproved());
-
-                // Получаем все ли принципалы проголосовали
-                var isChangeApprovedHandler = _manager.Web3.Eth.GetContractQueryHandler<isChangeApproved>();
-                var isChangeApproved = await isChangeApprovedHandler.QueryAsync<bool>(_manager.GetGovernorDelegator(), new isChangeApproved());
-
-
-                return new PendingImplementationInfo(pendingImplementation, isPrincipalApproved, isChangeApproved);
+                return new PendingImplementationInfo(pendingImplementation, false, false);
             }
         }
 
