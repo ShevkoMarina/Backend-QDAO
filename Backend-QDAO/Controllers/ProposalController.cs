@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.Proposal;
 using QDAO.Domain;
@@ -22,6 +23,7 @@ namespace QDAO.Endpoint.Controllers
             _mediator = mediator;
         }
 
+        [Authorize]
         [HttpPost("create")]
         public async Task<ActionResult<RawTransaction>> GetCreateProposalTransaction(
             [FromBody] CreateProposalDto request,
@@ -46,7 +48,7 @@ namespace QDAO.Endpoint.Controllers
             }
         }
 
-
+        [Authorize(Roles="admin")]
         [HttpPost("queue")]
         public async Task<ActionResult> GetQueueProposalTransaction(
             [FromQuery] long proposalId,
@@ -66,6 +68,7 @@ namespace QDAO.Endpoint.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("execute")]
         public async Task<ActionResult> GetExecuteProposalTransaction(
             [FromQuery] long proposalId,
@@ -85,7 +88,7 @@ namespace QDAO.Endpoint.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpGet("vote")]
         public async Task<ActionResult> GetVotingTransaction(
             [FromQuery] int userId,
@@ -99,6 +102,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = "principal")]
         [HttpGet("approve")]
         public async Task<ActionResult> GetApproveProposalTransaction(
             [FromQuery] long proposalId,
@@ -117,8 +121,8 @@ namespace QDAO.Endpoint.Controllers
                 return ex.ToHttp();
             }
         }
-        
 
+        [Authorize]
         [HttpGet("get-by-user")]
         public async Task<ActionResult<IReadOnlyCollection<ProposalThin>>> GetProposalsByUserId(
             [FromQuery] int userId,
@@ -130,6 +134,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response.Proposals);
         }
 
+        [Authorize]
         [HttpGet("info")]
         public async Task<ActionResult> GetProposalInfoById(
             [FromQuery] long proposalId,
@@ -142,6 +147,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpGet("active")]
         public async Task<ActionResult> GetProposalsActiveForVoting(CancellationToken ct)
         {
@@ -151,6 +157,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpGet("promotion")]
         public async Task<ActionResult> GetProposalsForPromotion(CancellationToken ct)
         {

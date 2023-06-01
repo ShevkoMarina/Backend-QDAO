@@ -13,6 +13,10 @@ using QDAO.Persistence.Repositories.Transaction;
 using QDAO.Persistence.Repositories.Proposal;
 using QDAO.Persistence.Repositories.ProposalQuorum;
 using QDAO.Endpoint.HostedServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using QDAO.Application.Services.DTOs.Security;
+using System.Security.Claims;
 
 namespace QDAO.Endpoint
 {
@@ -23,6 +27,33 @@ namespace QDAO.Endpoint
 
             services.AddControllers();
             services.AddSwaggerGen();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                   .AddJwtBearer(options =>
+                   {
+                       options.RequireHttpsMetadata = false;
+                       options.TokenValidationParameters = new TokenValidationParameters
+                       {
+                            // укзывает, будет ли валидироваться издатель при валидации токена
+                            ValidateIssuer = true,
+                            // строка, представляющая издателя
+                            ValidIssuer = AuthOptions.ISSUER,
+
+                            // будет ли валидироваться потребитель токена
+                            ValidateAudience = true,
+                            // установка потребителя токена
+                            ValidAudience = AuthOptions.AUDIENCE,
+                            // будет ли валидироваться время существования
+                            ValidateLifetime = true,
+
+                            // установка ключа безопасности
+                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(), 
+                            // валидация ключа безопасности
+                            ValidateIssuerSigningKey = true,
+                            RoleClaimType = ClaimsIdentity.DefaultRoleClaimType,
+                            NameClaimType = ClaimsIdentity.DefaultNameClaimType
+                       };
+                   });
 
             services.AddScoped<TransactionCreator>();
             services.AddScoped<ContractsManager>();
@@ -51,28 +82,27 @@ namespace QDAO.Endpoint
     
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+          
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                    options.RoutePrefix = string.Empty;
-                });
-                app.UseDeveloperExceptionPage();
-               
-            }
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                options.RoutePrefix = string.Empty;
+            });
+            app.UseDeveloperExceptionPage();
 
+            app.UseAuthentication();
             app.UseRouting();
-
-          //  app.UseMetricServer();
-            app.UseHttpMetrics();
-
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapMetrics();
-                endpoints.MapControllers(); 
+                endpoints.MapControllers();
             });
+
+            app.UseHttpMetrics();
+            //  app.UseMetricServer();
+
         }
     }
 }

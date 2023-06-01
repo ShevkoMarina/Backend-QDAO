@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.DAO;
 using QDAO.Application.Handlers.Token;
@@ -20,6 +21,7 @@ namespace QDAO.Endpoint.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("add-principal")]
         public async Task<ActionResult> AddPrincipals(
             [FromQuery] [Required] string userLogin,
@@ -34,6 +36,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpGet("updatable-settings")]
         public async Task<ActionResult> GetUpdatableSettingsInfo(CancellationToken ct)
         {
@@ -43,6 +46,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("transfer-tokens")]
         public async Task<ActionResult> Transfer(
             [FromQuery] int userId,
@@ -56,6 +60,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response.TransactionData);
         }
 
+        [Authorize(Roles = "principal")]
         [HttpGet("approve-implementation")]
         public async Task<ActionResult> GetApproveNewImplementationTransaction(
             [FromQuery] int userId,
@@ -67,6 +72,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpGet("implementation-info")]
         public async Task<ActionResult> GetPendingImplementationInfo(CancellationToken ct)
         {
@@ -76,6 +82,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response.PendingAddress);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("set-pending")]
         public async Task<ActionResult> SetPendingImplementationTransaction(
             [FromQuery] int userId,
@@ -88,6 +95,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("set-implementation")]
         public async Task<ActionResult> SetNewImplementationTransaction(
             [FromQuery] int userId,

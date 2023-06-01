@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.Transaction;
 using System.Threading;
@@ -19,6 +20,7 @@ namespace QDAO.Endpoint.Controllers
             _mediator = mediator;
         }
 
+        [Authorize]
         [HttpPost("execute")]
         public async Task<ActionResult<string>> ExecuteTransaction(
             [FromBody] string transaction,
@@ -28,19 +30,6 @@ namespace QDAO.Endpoint.Controllers
             var response = await _mediator.Send(command, ct);
 
             return Ok(response.TxHash);
-        }
-
-        
-        [HttpGet("events")]
-        public async Task<ActionResult> GetProposalEventsByTxHash(
-            [FromQuery] string hash,
-            CancellationToken ct)
-        {
-            var query = new GetEventsByTransactionHashQuery.Request(hash);
-            var response = await _mediator.Send(query, ct);
-
-            return Ok(response.Events);
-        }
-        
+        }  
     }
 }

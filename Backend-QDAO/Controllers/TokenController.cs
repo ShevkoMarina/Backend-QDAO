@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QDAO.Application.Handlers.Token;
 using System.Threading;
@@ -17,7 +18,7 @@ namespace QDAO.Endpoint.Controllers
             _mediator = mediator;
         }
 
-
+        [Authorize]
         [HttpGet("user-info")]
         public async Task<ActionResult<long>> GetUserTokenInfo(
             [FromQuery] int userId,
@@ -29,7 +30,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
-
+        [Authorize]
         [HttpGet("delegate")]
         public async Task<ActionResult> Delegate(
             [FromQuery] int userId,
@@ -42,6 +43,7 @@ namespace QDAO.Endpoint.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpGet("total")]
         public async Task<ActionResult> GetTotalSupply(CancellationToken ct)
         {

@@ -6,7 +6,6 @@ using QDAO.Domain;
 using QDAO.Persistence;
 using QDAO.Persistence.Repositories.User;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
